@@ -1,9 +1,7 @@
 class AccountController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_flashes
 
-  def index
-  end
+  def index; end
 
   def update
     current_user.update(account_update_params)
@@ -15,10 +13,5 @@ class AccountController < ApplicationController
 
   def account_update_params
     params.require(:user).permit(:email, :password)
-  end
-
-  def set_flashes
-    flash.now[:alert] = 'Subscription declined' if params[:aborted] == 'true'
-    flash.now[:notice] = 'Subscription updated successfully' if params[:updated] == 'true'
   end
 end

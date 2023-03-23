@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <%= metamagic site: ENV['COMPANY_NAME'], title: [:site, :title], separator: " | " %>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-
-  <body>
-    <main class="container mx-auto mt-14 px-6">
-      <%= render "shared/flash" %>
-      <%= render "shared/header" %>
-      <%= yield %>
-    </main>
-
-    <%= render partial: "shared/script_tags" %>
-  </body>
+	<head>
+		<%= metamagic site: ENV['COMPANY_NAME'], title: [:site, :title], separator: " | " %>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+		<%= favicon_link_tag 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiM2ODI2ZTMiIGQ9Ik01LjA2IDNjLS40MyAwLS44NC4xNC0xLjIyLjQycy0uNi42NC0uNyAxLjA4TDIuMTEgOC45MWMtLjI1IDEuMDktLjA1IDIuMDEuNTggMi44MmMuMTIuMTIuMjQuMjQuMzUuMzRjLjU5LjU3IDEuMjQuOTMgMi4xOC45M3MxLjY5LS40MSAyLjI1LS45NWMuNjMuNjIgMS4zOS45NSAyLjMzLjk1Yy44NCAwIDEuNjQtLjM3IDIuMi0uOTNjLjY4LjYzIDEuNDUuOTMgMi4zLjkzYy44NyAwIDEuNjEtLjMzIDIuMjQtLjk1Yy41Ny41NyAxLjMyLjk1IDIuMjcuOTVzMS42Mi0uMzUgMi4xOS0uOTRsLjEzLS4xNGwuMTUtLjE1Yy42Ni0uODIuODYtMS43Ny42MS0yLjg2TDIwLjg2IDQuNWMtLjEzLS40NC0uMzYtLjgtLjczLTEuMDhBMS44OCAxLjg4IDAgMCAwIDE4Ljk0IDNtLS4wNSAxLjk3bDEuMDggNC40MWMuMDkuNDMgMCAuODItLjI4IDEuMTdjLS4yNS4zMS0uNTYuNDUtLjk0LjQ1Yy0uMzEgMC0uNTgtLjEtLjgtLjM0Yy0uMjItLjIzLS4zNC0uNS0uMzctLjgyTDE2Ljk3IDVNNS4wNiA1aDEuOTdsLS42MSA0Ljg0QzYuMyAxMC42MyA1LjkxIDExIDUuMjUgMTFjLS40MSAwLS43Mi0uMTQtLjk0LS40NWMtLjI4LS4zNS0uMzctLjc0LS4yOC0xLjE3TTkuMDUgNUgxMXY0LjdjMCAuMzUtLjExLjY1LS4zNi45MmMtLjI1LjI2LS41Ni4zOC0uOTQuMzhjLS4zNCAwLS42My0uMTItLjg2LS40MVM4LjUgMTAgOC41IDkuNjZWOS41TTEzIDVoMS45NWwuNTUgNC41Yy4wOC40MiAwIC43Ny0uMjkgMS4wN2MtLjI2LjMtLjYuNDMtMS4wMS40M2MtLjMxIDAtLjU5LS4xMi0uODQtLjM4QTEuMjkgMS4yOSAwIDAgMSAxMyA5LjdtLS4wMyA1LjAyYTMuMzcgMy4zNyAwIDAgMS0uOTctLjY1Yy0uNTcuNTctMS4zNS45My0yLjIyLjkzYy0uOTEgMC0xLjcxLS4zNS0yLjMxLS45NWMtLjU4LjU5LTEuMzcuOTUtMi4yNC45NWMtLjkgMC0xLjU3LS4zNS0yLjIzLS45N1YxOWMwIDEuMTEuODkgMiAyIDJoNy44Yy0uNTEtLjg4LS44LTEuOTEtLjgtM2MwLTEuMjEuMzYtMi4zNC45Ny0zLjI4TTE3IDIxbC0yLjc1LTNsMS4xNi0xLjE2TDE3IDE4LjQzbDMuNTktMy41OWwxLjE2IDEuNDFaIi8+PC9zdmc+' %>
+		<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+		<%= javascript_importmap_tags %>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	</head>
+	<body>
+		<main class="container mx-auto mt-[4dvh] px-6">
+			<%= render "shared/flash" %>
+			<%= render "shared/header" %>
+			<%= yield %>
+		</main>
+		<%= render partial: "shared/script_tags" %>
+	</body>
 </html>

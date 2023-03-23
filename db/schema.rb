@@ -38,9 +38,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_01_110210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
-    t.string "stripe_customer_id"
-    t.boolean "paying_customer", default: false
-    t.string "stripe_subscription_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
