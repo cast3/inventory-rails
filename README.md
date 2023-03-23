@@ -37,16 +37,5 @@ bundle exec rspec # run all tests inside spec/
 bundle exec rspec spec/dir_name # run all tests inside given directory
 ```
 
-## Deploying
-```sh
-figaro heroku:set -e production # you only need to do this once
-heroku git:remote -a heroku_app_name_here # you only need to do this once
-```
-
-```sh
-git push heroku master # deploys master branch
-git push heroku some_branch_name:master # deploys non-master branch
-```
-
 ## Miscellaneous
 to use Postmark for emails, set `postmark_api_token` inside `application.yml`, then [verify your sending domain](https://account.postmarkapp.com/signature_domains/initialize_verification).
