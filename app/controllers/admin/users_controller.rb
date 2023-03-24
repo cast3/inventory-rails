@@ -6,13 +6,13 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user.update(user_params)
-    redirect_to edit_admin_user_path(id: @user.id), notice: 'User updated successfully.'
+    redirect_to edit_admin_user_path(id: @user.id), notice: 'Usuario fue actualizado exitosamente.'
   end
 
   def destroy
     email = @user.email
     DestroyUser.new(@user).call
-    redirect_to admin_dashboard_index_path, notice: "User '#{email}' was destroyed."
+    redirect_to admin_dashboard_index_path, notice: "Usuario '#{email}' fue eliminado."
   end
 
   private
