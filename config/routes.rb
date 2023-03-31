@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :products
+  resources :providers
+  resources :categories
   root 'pages#home'
 
   devise_for :users

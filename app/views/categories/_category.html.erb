@@ -1,0 +1,23 @@
+<tr id="<%= dom_id category %>" class="border-b border-gray-200 even:bg-gray-200 pl-[5%] text-center">
+	<td>
+		<p class="my-3">
+			<%# <strong class="block font-medium mb-1">Nro</strong> %>
+			<%= category.id %>
+		</p>
+	</td>
+	<td>
+		<p class="my-3 text-left">
+			<%# <strong class="block font-medium mb-1">Nombre</strong> %>
+			<%= category.nombre %>
+		</p>
+	</td>
+	<td>
+		<% if action_name != "show" %>
+			<%= link_to "Ver", category, class: "rounded-lg py-2 px-3 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+			<%= link_to 'Editar', edit_category_path(category), class: "rounded-lg py-2 ml-2 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+			<%= link_to edit_category_path(category) do %>
+				<%= render inline: Rails.root.join('app/assets/svgs/Edit.svg').read %>
+			<% end %>
+		<% end %>
+	</td>
+</tr>

@@ -22,6 +22,7 @@ module ABCLTDA
       end
     end
     config.time_zone = 'Bogota'
+    config.active_record.default_timezone = :local
     # background jobs
     config.active_job.queue_adapter = :delayed
 
