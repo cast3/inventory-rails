@@ -1,18 +1,18 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: cast3
-  password: '0124'
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("DB_USERNAME") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
 
 development:
   <<: *default
-  database: ABCLTDA_development
+  database: <%= ENV.fetch("DB_NAME") { "ABCLTDA_development" } %>
 
 test:
   <<: *default
   database: ABCLTDA_test
-  
+
 production:
   <<: *default
   database: ABCLTDA_production
