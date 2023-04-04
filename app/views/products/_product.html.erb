@@ -1,32 +1,62 @@
-<div id="<%= dom_id product %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Nombre:</strong>
-    <%= product.nombre %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Referencia:</strong>
-    <%= product.referencia %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Fecha expiracion:</strong>
-    <%= product.fecha_expiracion %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Provider:</strong>
-    <%= product.provider_id %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Category:</strong>
-    <%= product.category_id %>
-  </p>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show this product", product, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this product', edit_product_path(product), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
-</div>
+<tr id="<%= dom_id product %>" class="border-gray-200 hover:border-gray-300 even:bg-gray-200 pl-[5%] text-center">
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Nombre:</b>
+			<% end %>
+			<%= product.nombre %>
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Referencia:</b>
+			<% end %>
+			<%= product.referencia %>
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Fecha creación:</b>
+			<% end %>
+			<%= product.fecha_expiracion %>
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Stock:</b>
+			<% end %>
+			0
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Proveedor:</b>
+			<% end %>
+			<%= search_provider_name(product.provider_id) %>
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Categoría:</b>
+			<% end %>
+			<%= search_cat_name(product.category_id) %>
+		</p>
+	</td>
+	<td>
+		<% if action_name != "show" %>
+			<div class="flex flex-row flex-nowrap justify-center">
+				<%= link_to edit_product_path(product), class:'mr-2' do %>
+					<%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
+				<% end %>
+				<%= link_to product do %>
+					<%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
+				<% end %>
+			</div>
+		<% end %>
+	</td>
+</tr>

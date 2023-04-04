@@ -1,22 +1,52 @@
-<div id="<%= dom_id provider %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Nombre:</strong>
-    <%= provider.nombre %>
-  </p>
+<tr id="<%= dom_id provider %>" class="border-b border-gray-200 even:bg-gray-200 pl-[5%] text-center">
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+			<b>Nombre:</b>
+			<% end %>
+		<%= provider.nombre %>		
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Telefono:</b>
+			<% end %>
+			<%= provider.telefono %>
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Dirección:</b>
+			<% end %>
+			<%= provider.direccion %>
+		</p>
+	</td>
+	<td>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Fecha creación:</b>
+			<% end %>
+			<%= provider.created_at.strftime("%d/%m/%Y %H:%M") %>
+		</p>
+	</td>
+	<% if action_name != "show" %>
+		<td>
+			<div class="flex flex-row flex-nowrap justify-center">
+				<%= link_to edit_provider_path(provider), class:'mr-2' do %>
+					<%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
+				<% end %>
+				<%= link_to provider do %>
+					<%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
+				<% end %>
+			</div>
+		</td>
+	<% end %>
+</td>
+</tr>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Telefono:</strong>
-    <%= provider.telefono %>
-  </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Direccion:</strong>
-    <%= provider.direccion %>
-  </p>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this provider", provider, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this provider', edit_provider_path(provider), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
-</div>
+
+

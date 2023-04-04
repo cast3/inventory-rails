@@ -21,8 +21,8 @@ module ABCLTDA
         resource '*', headers: :any, methods: %i[get post patch put delete]
       end
     end
-    config.time_zone = 'Bogota'
-    config.active_record.default_timezone = :local
+    config.time_zone = 'America/Bogota'
+    config.active_record.default_timezone = :utc
     # background jobs
     config.active_job.queue_adapter = :delayed
 

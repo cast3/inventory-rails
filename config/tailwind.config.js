@@ -4,7 +4,7 @@ module.exports = {
   content: [
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-    './app/views/**/*'
+    './app/views/**/*',
   ],
   theme: {
     extend: {
@@ -21,6 +21,8 @@ module.exports = {
     },
   },
   plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/ui'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),

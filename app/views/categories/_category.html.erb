@@ -1,23 +1,31 @@
-<tr id="<%= dom_id category %>" class="border-b border-gray-200 even:bg-gray-200 pl-[5%] text-center">
+<tr id="<%= dom_id category %>" class="even:bg-gray-200 text-center hover:ring-primary">
 	<td>
-		<p class="my-3">
-			<%# <strong class="block font-medium mb-1">Nro</strong> %>
-			<%= category.id %>
-		</p>
-	</td>
-	<td>
-		<p class="my-3 text-left">
-			<%# <strong class="block font-medium mb-1">Nombre</strong> %>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Nombre:</b>
+			<% end %>
 			<%= category.nombre %>
 		</p>
 	</td>
 	<td>
-		<% if action_name != "show" %>
-			<%= link_to "Ver", category, class: "rounded-lg py-2 px-3 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
-			<%= link_to 'Editar', edit_category_path(category), class: "rounded-lg py-2 ml-2 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
-			<%= link_to edit_category_path(category) do %>
-				<%= render inline: Rails.root.join('app/assets/svgs/Edit.svg').read %>
+		<p class="py-2">
+			<% if action_name == "show" %>
+				<b>Fecha creación:</b>
 			<% end %>
-		<% end %>
+			<%= category.created_at.strftime("%d/%m/%Y %H:%M") %>
+		</p>
 	</td>
+	<% if action_name != "show" %>
+		<td>
+			<div class="flex flex-row flex-nowrap justify-center gap-x-2">
+				<%= link_to edit_category_path(category) do %>
+					<%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
+				<% end %>
+				<%= link_to category do %>
+					<%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
+				<% end %>
+			</div>
+		</td>
+	<% end %>
+</td>
 </tr>

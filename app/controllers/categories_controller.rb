@@ -1,9 +1,10 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
+  before_action :ensure_no_products, only: [:destroy]
 
   # GET /categories or /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.all.order(created_at: :desc)
   end
 
   # GET /categories/1 or /categories/1.json
@@ -56,6 +57,14 @@ class CategoriesController < ApplicationController
   end
 
   private
+
+  def ensure_no_products
+    @products = Product.where(category_id: @category.id)
+    return unless @products.any?
+
+    flash[:alert] = 'No se puede eliminar la categoría porque tiene productos asociados.'
+    redirect_to categories_path
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_category
