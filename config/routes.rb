@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :movimientos
+  resources :clientes
   root 'pages#home'
   resources :products
   resources :providers

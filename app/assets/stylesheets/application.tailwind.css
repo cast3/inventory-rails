@@ -17,7 +17,7 @@
 }
 
 .has-tooltip:hover .tooltip {
-  @apply visible z-9999;
+  @apply visible z-50;
 }
 
 .toggle-checkbox:checked {
