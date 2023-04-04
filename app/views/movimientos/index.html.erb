@@ -1,0 +1,55 @@
+<div class="py-4">
+  <%= form_with(model: movimiento, class: "contents") do |form| %>
+    <%# Select de Productos %>
+    <div class="mb-4">
+      <%= form.label :product_id, 'Producto', class: 'block font-medium text-gray-700' %>
+      <%= form.collection_select :product_id, Product.all, :id, :nombre, {}, { class: 'block w-full mt-1 form-select' } %>
+    </div>
+
+    <%# Cantidad %>
+    <div class="mb-4">
+      <%= form.label :cantidad, 'Cantidad', class: 'block font-medium text-gray-700' %>
+      <%= form.number_field :cantidad, class: 'block w-full mt-1 form-input' %>
+    </div>
+
+    <%# Tipo de Movimiento %>
+    <div class="mb-4">
+      <%= form.label :tipo, 'Tipo de Movimiento', class: 'block font-medium text-gray-700' %>
+      <%= form.select :tipo, Movimiento.tipos.keys, {}, { class: 'block w-full mt-1 form-select' } %>
+    </div>
+
+    <%# Botón para agregar producto %>
+    <div class="mb-4">
+      <%= form.submit 'Agregar Producto', class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+    </div>
+  <% end %>
+
+  <%# Tabla con los productos agregados %>
+  <table class="w-full table-auto">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">#</th>
+        <th class="px-4 py-2">Producto</th>
+        <th class="px-4 py-2">Cantidad</th>
+        <th class="px-4 py-2">Tipo de Movimiento</th>
+        <th class="px-4 py-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% movimiento.movimientos_productos.each_with_index do |mp, index| %>
+        <tr>
+          <td class="border px-4 py-2"><%= index + 1 %></td>
+          <td class="border px-4 py-2"><%= mp.product.nombre %></td>
+          <td class="border px-4 py-2"><%= mp.cantidad %></td>
+          <td class="border px-4 py-2"><%= mp.tipo %></td>
+          <td class="border px-4 py-2">
+            <%= link_to 'Eliminar', [movimiento, mp], method: :delete, data: { confirm: '¿Estás seguro de eliminar este producto del movimiento?' }, class: 'text-red-500 hover:text-red-700' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%# Botón para guardar movimiento %>
+  <%= link_to 'Guardar Movimiento', movimiento_path(movimiento), class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' %>
+</div>
