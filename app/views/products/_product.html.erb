@@ -1,62 +1,48 @@
 <tr id="<%= dom_id product %>" class="border-gray-200 hover:border-gray-300 even:bg-gray-200 pl-[5%] text-center">
-	<td>
-		<p class="py-2">
-			<% if action_name == "show" %>
-				<b>Nombre:</b>
-			<% end %>
-			<%= product.nombre %>
-		</p>
-	</td>
-	<td>
-		<p class="py-2">
-			<% if action_name == "show" %>
-				<b>Referencia:</b>
-			<% end %>
-			<%= product.referencia %>
-		</p>
-	</td>
-	<td>
-		<p class="py-2">
-			<% if action_name == "show" %>
-				<b>Fecha creación:</b>
-			<% end %>
-			<%= product.fecha_expiracion %>
-		</p>
-	</td>
-	<td>
-		<p class="py-2">
-			<% if action_name == "show" %>
-				<b>Stock:</b>
-			<% end %>
-			0
-		</p>
-	</td>
-	<td>
-		<p class="py-2">
-			<% if action_name == "show" %>
-				<b>Proveedor:</b>
-			<% end %>
-			<%= search_provider_name(product.provider_id) %>
-		</p>
-	</td>
-	<td>
-		<p class="py-2">
-			<% if action_name == "show" %>
-				<b>Categoría:</b>
-			<% end %>
-			<%= search_cat_name(product.category_id) %>
-		</p>
-	</td>
-	<td>
-		<% if action_name != "show" %>
-			<div class="flex flex-row flex-nowrap justify-center">
-				<%= link_to edit_product_path(product), class:'mr-2' do %>
-					<%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
-				<% end %>
-				<%= link_to product do %>
-					<%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
-				<% end %>
-			</div>
-		<% end %>
-	</td>
+  <td>
+    <p class="py-2">
+      <%= product.nombre %>
+    </p>
+  </td>
+  <td>
+    <p class="py-2">
+      <%= product.referencia %>
+    </p>
+  </td>
+  <td>
+    <p class="py-2">
+      <% if product.fecha_expiracion > Date.today %>
+        <%= tag.span(distance_of_time_in_words(Date.today, product.fecha_expiracion) + " restantes", class: 'text-green-700') %>
+      <% else %>
+        <%= tag.span(distance_of_time_in_words(Date.today, product.fecha_expiracion) + " expirados", class: 'text-red-700') %>
+      <% end %>
+    </p>
+  </td>
+  <td>
+    <p class="py-2">
+      0
+    </p>
+  </td>
+  <td>
+    <p class="py-2">
+      <%= search_provider_name(product.provider_id) %>
+    </p>
+  </td>
+  <td>
+    <p class="py-2">
+      <%= search_cat_name(product.category_id) %>
+    </p>
+  </td>
+  <td>
+    <% if action_name != "show" %>
+      <div class="flex flex-row flex-nowrap justify-center">
+        <%= link_to edit_product_path(product), class: 'mr-2' do %>
+          <%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
+        <% end %>
+        <%= link_to product do %>
+          <%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
+        <% end %>
+      </div>
+    <% end %>
+  </td>
 </tr>

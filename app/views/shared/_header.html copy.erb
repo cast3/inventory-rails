@@ -1,0 +1,17 @@
+<header class="px-2" data-controller="header">
+	<nav class="flex items-center justify-between flex-wrap">
+		<div class="block sm:hidden">
+			<button class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white" data-action="click->header#toggleMobileNav">
+				<%= image_tag("svgs/IconMenu.svg", alt: "Menu Hamburguesa", width: "30", height: "30") %>
+			</button>
+		</div>
+		<div id="main-nav" class="w-full flex-grow sm:flex text-right sm:w-auto hidden" data-header-target="mainNav">
+			<div class="text-sm sm:flex-grow text-white">
+				<% if current_user %>
+					<%= tag.span("Bienvenido "+current_user.role.capitalize, class: 'text-black') %>
+					<%= link_to 'Salir', logout_path, class: "ml-8 whitespace-nowrap text-base font-medium inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700" %>
+				<% end %>
+			</div>
+		</div>
+	</nav>
+</header>

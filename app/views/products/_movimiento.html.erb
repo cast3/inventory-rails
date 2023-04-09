@@ -1,0 +1,10 @@
+<% @movements.each do |movement|%>
+	<%= turbo_frame_tag movement do %>
+		<div class="table-mov min-w-full">
+			<div class="text-center"><%= movement.tipo %></div>
+			<div class="text-center"><%= movement.cantidad %></div>
+			<div class="text-center"><%= movement.descripcion %></div>
+			<div class="text-center"><%= movement.created_at.strftime("%d/%m/%Y %H:%M") %> </div>
+		</div>
+	<% end %>
+<% end %>

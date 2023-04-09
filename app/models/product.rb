@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :provider
   belongs_to :category
+  has_many :movimiento, dependent: :destroy
 
   validates :nombre, presence: true
   validates :referencia, presence: true

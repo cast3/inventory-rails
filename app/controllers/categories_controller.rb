@@ -1,9 +1,12 @@
 class CategoriesController < ApplicationController
+  include ActionView::RecordIdentifier
+  before_action :authenticate_user!
   before_action :set_category, only: %i[show edit update destroy]
   before_action :ensure_no_products, only: [:destroy]
 
   # GET /categories or /categories.json
   def index
+    @category = Category.new
     @categories = Category.all.order(created_at: :desc)
   end
 
@@ -22,38 +25,36 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
 
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to category_url(@category), notice: 'Categoria ha sido creada exitosamente.' }
-        format.json { render :show, status: :created, location: @category }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    if @category.save
+      streams = []
+      streams << turbo_stream.prepend('categories', partial: 'categories/category', locals: { category: @category })
+      streams << turbo_stream.prepend('form_category', partial: 'categories/form', locals: { category: @category })
+      render turbo_stream: streams
+    else
+      flash[:alert] = 'No se pudo crear la nota.'
     end
   end
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
-    respond_to do |format|
-      if @category.update(category_params)
-        format.html { redirect_to category_url(@category), notice: 'Categoria ha sido actualizada exitosamente.' }
-        format.json { render :show, status: :ok, location: @category }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    streams = []
+    if @category.update(category_params)
+      streams << turbo_stream.replace('edit_category', partial: 'categories/category', locals: { category: @category })
+      streams << turbo_stream.replace(dom_id(@category).to_s, partial: 'categories/category',
+                                                              locals: { category: @category })
+    else
+      flash[:alert] = 'No se pudo actualizar la nota.'
     end
+
+    render turbo_stream: streams
   end
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
     @category.destroy
-
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Categoria ha sido eliminada exitosamente.' }
-      format.json { head :no_content }
-    end
+    streams = []
+    streams << turbo_stream.remove(dom_id(@category).to_s)
+    render turbo_stream: streams
   end
 
   private
@@ -62,8 +63,8 @@ class CategoriesController < ApplicationController
     @products = Product.where(category_id: @category.id)
     return unless @products.any?
 
-    flash[:alert] = 'No se puede eliminar la categoría porque tiene productos asociados.'
     redirect_to categories_path
+    flash[:alert] = 'No se puede eliminar la categoría porque tiene productos asociados.'
   end
 
   # Use callbacks to share common setup or constraints between actions.

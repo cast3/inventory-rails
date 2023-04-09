@@ -5,14 +5,18 @@
 			<%= render "devise/shared/error_messages", resource: resource %>
 			<div class="mb-2">
 				<% prefilled_email = params[:email].present? ? params[:email] : '' %>
-				<% prefilled_password = params[:password].present? ? params[:password] : '' %>
 				<input aria-label="Email address" name="user[email]" id="user_email" type="email" required value="<%= prefilled_email %>" class="appearance-none rounded-b-md rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Correo" />
 			</div>
 			<div class="mb-2">
 				<%= password_field "user", :password, placeholder: "Contraseña", class: "appearance-none rounded-b-md rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" %>
 			</div>
 			<div class="mb-2">
-				<%= password_field "user", :password_confirmation, placeholder: "Confirmar contraseña", class: "appearance-none rounded-b-md rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" %>
+				<% same_password_as_above = params[:password].present? ? params[:password] : '' %>
+				<% if same_password_as_above.present? %>
+					<%= password_field "user", :password_confirmation, placeholder: "Confirmar contraseña", class: "appearance-none rounded-b-md rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5", value: same_password_as_above %>
+				<% else %>
+					<%= password_field "user", :password_confirmation, placeholder: "Confirmar contraseña", class: "appearance-none rounded-b-md rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" %>
+				<% end %>
 			</div>
 			<div class="mt-6">
 				<button type="submit" data-turbo="false" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none transition duration-150 ease-in-out">

@@ -10,10 +10,6 @@ module ABCLTDA
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-
-    require 'cloudflare_proxy'
-    config.middleware.use CloudflareProxy
-
     # allow cross origin requests
     config.middleware.insert_before 0, Rack::Cors do
       allow do
@@ -25,13 +21,6 @@ module ABCLTDA
     config.active_record.default_timezone = :utc
     # background jobs
     config.active_job.queue_adapter = :delayed
-
-    # mailers via postmark
-    config.action_mailer.default_url_options = { host: ENV['BASE_URL'] }
-    config.action_mailer.default_options = { from: ENV['ADMIN_EMAIL'] }
-    config.action_mailer.delivery_method = :postmark
-    config.action_mailer.postmark_settings = { api_token: ENV['POSTMARK_API_TOKEN'] }
-
     # serve images from asset pipeline in mailers
     config.asset_host = ENV['BASE_URL']
 
@@ -44,6 +33,7 @@ module ABCLTDA
       g.assets = false # stylesheets
       g.helper = true
     end
+    config.generators.system_tests = nil
 
     # i18n
     config.i18n.default_locale = :es

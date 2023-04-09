@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_admin, only: %i[index destroy]
   before_action :set_user, only: %i[show edit update destroy]
@@ -21,7 +21,7 @@ class UserController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    redirect_to root_path, notice: 'User was successfully destroyed.'
   end
 
   private

@@ -1,23 +1,21 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
-  # GET /products or /products.json
   def index
     @products = Product.all.order(created_at: :desc)
   end
 
-  # GET /products/1 or /products/1.json
-  def show; end
+  def show
+    @product = Product.find(params[:id])
+    @movements = Movimiento.where(product_id: @product.id)
+  end
 
-  # GET /products/new
   def new
     @product = Product.new
   end
 
-  # GET /products/1/edit
   def edit; end
 
-  # POST /products or /products.json
   def create
     @product = Product.new(product_params)
 
@@ -32,7 +30,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1 or /products/1.json
   def update
     respond_to do |format|
       if @product.update(product_params)
@@ -45,7 +42,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1 or /products/1.json
   def destroy
     @product.destroy
 
@@ -55,15 +51,42 @@ class ProductsController < ApplicationController
     end
   end
 
+  def create_movement
+    @product = Product.find(params[:id])
+    @movement = Movimiento.new(movement_params)
+
+    if @movement.save
+      flash.now[:notice] = 'User was successfully created.'
+      render turbo_stream: [
+        turbo_stream.prepend('movements', @movement),
+        turbo_stream.replace(
+          'form_movement',
+          partial: 'form-movement',
+          locals: { movement: @movement }
+        ),
+        turbo_stream.replace('notice', partial: 'layouts/flash')
+      ]
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def new_movement
+    @product = Product.find(params[:id])
+    @movement = Movimiento.new(product_id: @product.id)
+  end
+
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_product
     @product = Product.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def product_params
     params.require(:product).permit(:nombre, :referencia, :fecha_expiracion, :provider_id, :category_id)
+  end
+
+  def movement_params
+    params.require(:movement).permit(:tipo, :cantidad, :descripcion)
   end
 end

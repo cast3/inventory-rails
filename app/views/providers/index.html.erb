@@ -1,25 +1,26 @@
 <div class="w-full my-5">
-	<% if notice.present? %>
-		<p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-	<% end %>
-	<div class="flex justify-between items-center">
-		<h1 class="font-bold text-4xl">Proveedores</h1>
-		<%= link_to 'Nuevo proveedor', new_provider_path, class: "rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium" %>
-	</div>
-	<div id="providers" class="mt-5 overflow-x-auto rounded-lg shadow-md">
-		<table class="table-auto w-full">
-			<thead class="bg-primary text-white">
-				<tr>
-					<th class="px-4 py-2 tracking-wider">Nombre</th>
-					<th class="px-4 py-2 tracking-wider">Teléfono</th>
-					<th class="px-4 py-2 tracking-wider">Dirección</th>
-					<th class="px-4 py-2 tracking-wider">Fecha creación</th>
-					<th class="px-4 py-2 tracking-wider">Acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%= render @providers %>
-			</tbody>
-		</table>
-	</div>
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Proveedores</h1>
+    <%= link_to 'Nuevo proveedor', new_provider_path, class: "rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium" %>
+  </div>
+  <div id="providers" class="mt-5 overflow-x-auto rounded-lg shadow-md">
+    <div class="w-full h-[50vh] flex flex-col">
+      <div class="flex-1 bg-white overflow-auto">
+        <table class="table-fixed min-w-full">
+          <thead class="sticky top-0 bg-primary text-white">
+          <tr>
+            <th class="px-4 py-2 tracking-wider">Nombre</th>
+            <th class="px-4 py-2 tracking-wider">Teléfono</th>
+            <th class="px-4 py-2 tracking-wider">Dirección</th>
+            <th class="px-4 py-2 tracking-wider">Fecha creación</th>
+            <th class="px-4 py-2 tracking-wider">Acciones</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white overflow-auto">
+          <%= render @providers %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

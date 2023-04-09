@@ -1,27 +1,28 @@
 <div class="w-full my-5">
-	<% if notice.present? %>
-		<p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-	<% end %>
-	<div class="flex justify-between items-center">
-		<h1 class="font-bold text-4xl">Productos</h1>
-		<%= link_to 'Nuevo producto', new_product_path, class: "rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium" %>
-	</div>
-	<div id="products" class="mt-5 overflow-x-auto rounded-lg shadow-md">
-		<table class="table-auto w-full">
-			<thead class="bg-primary text-white">
-				<tr>
-					<th class="px-4 py-2 tracking-wider">Nombre</th>
-					<th class="px-4 py-2 tracking-wider">Referencia</th>
-					<th class="px-4 py-2 tracking-wider">Fecha expiración</th>
-					<th class="px-4 py-2 tracking-wider">Stock</th>
-					<th class="px-4 py-2 tracking-wider">Proveedor</th>
-					<th class="px-4 py-2 tracking-wider">Categoría</th>
-					<th class="px-4 py-2 tracking-wider">Acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%= render @products %>
-			</tbody>
-		</table>
-	</div>
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Productos</h1>
+    <%= link_to 'Nuevo producto', new_product_path, class: " rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium" %>
+  </div>
+  <div id="products" class="mt-5 overflow-x-auto rounded-lg shadow-md">
+    <div class="w-full h-[50vh] flex flex-col">
+      <div class="flex-1 bg-white overflow-auto">
+        <table class="table-fixed min-w-full">
+          <thead class="sticky top-0 bg-primary text-white">
+          <tr>
+            <th class="px-4 py-2 tracking-wider">Nombre</th>
+            <th class="px-4 py-2 tracking-wider">Referencia</th>
+            <th class="px-4 py-2 tracking-wider">Fecha expiración</th>
+            <th class="px-4 py-2 tracking-wider">Stock</th>
+            <th class="px-4 py-2 tracking-wider">Proveedor</th>
+            <th class="px-4 py-2 tracking-wider">Categoría</th>
+            <th class="px-4 py-2 tracking-wider">Acciones</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white overflow-auto">
+          <%= render @products %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

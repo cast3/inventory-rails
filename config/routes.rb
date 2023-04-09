@@ -1,23 +1,22 @@
 Rails.application.routes.draw do
-  root 'pages#home'
-  resources :products
-  resources :providers
-  resources :categories
+  root to: 'dashboard#index'
 
-  devise_for :users
+  resources :categories
+  resources :products do
+    get 'new_movement', on: :member
+    post 'create_movement', on: :member
+  end
+
+  resources :providers
+
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
   get 'logout', to: 'pages#logout', as: 'logout'
 
   resources :dashboard, only: [:index]
   resources :account, only: %i[index update]
 
-  # static pages
-  pages = %w[
-    privacy terms
-  ]
-
-  pages.each do |page|
-    get "/#{page}", to: "pages##{page}", as: "#{page.gsub('-', '_')}"
-  end
 
   # admin panels
   authenticated :user, ->(user) { user.admin? } do

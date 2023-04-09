@@ -8,5 +8,6 @@ class DestroyUser
   def call
     user.destroy
   end
+
   handle_asynchronously :call
 end

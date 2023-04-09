@@ -6,8 +6,22 @@ class User < ApplicationRecord
   include Signupable
   include Onboardable
 
-  validates :email, presence: true, uniqueness: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i,
-                                                                message: 'es un correo incorrecto' }
-  validates :password, presence: true, length: { minimum: 6 }, confirmation: true
-  validates :password_confirmation, presence: true
+  enum role: %i[empleado admin]
+  after_initialize :set_default_role, if: :new_record?
+
+  def set_default_role
+    self.role ||= :empleado
+  end
+
+  validates :password, format: { with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\z/,
+                                 message: 'Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un
+                                 número y un caracter especial' }
+
+  private
+
+  def passwords_match
+    return unless password != password_confirmation
+
+    errors.add(:password_confirmation, 'Las contraseñas no coinciden')
+  end
 end
