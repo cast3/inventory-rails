@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <% nav_link_classes = 'flex justify-between text-left items-center py-1 px-6 align-middle text-gray-600 no-underline hover:text-indigo-400 md:py-3' %>
 <% active_link_classes = 'border-r-4 border-primary bg-violet-50' %>
 <% icon_link = "text-primary" %>
@@ -61,4 +62,43 @@
       </p>
     </div>
   </div>
+=======
+<% nav_link_classes = 'block py-1 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400 md:py-3' %>
+<% active_link_classes = 'bg-gray-100' %>
+<div id="sidebar" class="menu fixed z-50 flex h-screen w-16 items-center bg-white px-4 text-white shadow transition-all duration-300 ease-in-out hover:w-[150px] hover:shadow-2xl">
+	<ul class="list-reset">
+		<li class="my-2 md:my-0">
+			<%= link_to '', products_path, class: "#{nav_link_classes} #{params[:controller] == 'products' ? active_link_classes : ''}" do %>
+				<%= image_tag "svgs/logo.svg", class: "h-10 mr-3" %>
+				<span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Productos </span>
+			<% end %>
+		</li>
+		<li class="my-2 md:my-0">
+			<%= link_to '', providers_path, class: "#{nav_link_classes} #{params[:controller] == 'products' ? active_link_classes : ''}" do %>
+				<%= image_tag "svgs/logo.svg", class: "h-10 mr-3" %>
+				<span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Proveedores </span>
+			<% end %>
+		</li>
+		<li class="my-2 md:my-0">
+			<%= link_to '', categories_path, class: "#{nav_link_classes} #{params[:controller] == 'products' ? active_link_classes : ''}" do %>
+				<%= image_tag "svgs/logo.svg", class: "h-10 mr-3" %>
+				<span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Categorías </span>
+			<% end %>
+		</li>
+		<li class="my-2 md:my-0">
+			<%= link_to '', account_index_path, class: "#{nav_link_classes} #{params[:controller] == 'products' ? active_link_classes : ''}" do %>
+				<%= image_tag "svgs/logo.svg", class: "h-10 mr-3" %>
+				<span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Cuenta </span>
+			<% end %>
+		</li>
+		<% if current_user.admin? do %>
+			<li class="my-2 md:my-0">
+				<%= link_to '', account_index_path, class: "#{nav_link_classes} #{params[:controller] == 'admin/dashboard' ? active_link_classes : ''}" do %>
+					<%= image_tag "svgs/logo.svg", class: "h-10 mr-3" %>
+					<span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Admin </span>
+				<% end %>
+			</li>
+		<% end %>
+	</ul>
+>>>>>>> 06c0dc7 (Cambios a diagrama)
 </div>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <% nav_link_classes = 'block py-1 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400 md:py-3' %>
 <% active_link_classes = 'bg-gray-100' %>
 <header class="fixed float-left left-0 z-10" data-controller="header">
@@ -11,4 +12,33 @@
       </button>
     </div>
   </nav>
+=======
+<header class="px-2" data-controller="header">
+	<nav class="flex items-center justify-between flex-wrap">
+		<div class="flex items-center flex-no-shrink text-black mr-6">
+			<% logo_path = current_user ? dashboard_index_path : root_path %>
+			<%= link_to logo_path do %>
+				<%= image_tag("svgs/Menu.svg", alt: "Menu principal", width: "30", height: "30") %>
+			<% end %>
+		</div>
+		<div class="block sm:hidden">
+			<button class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white" data-action="click->header#toggleMobileNav">
+				<%= image_tag("svgs/IconMenu.svg", alt: "Menu Hamburguesa", width: "30", height: "30") %>
+			</button>
+		</div>
+		<div id="main-nav" class="w-full flex-grow sm:flex text-right sm:w-auto hidden" data-header-target="mainNav">
+			<div class="text-sm sm:flex-grow text-white">
+				<% nav_link_classes = 'ml-8 whitespace-nowrap sm:text-base font-medium text-gray-500 text-center my-5 hover:text-gray-900' %>
+				<% active_link_classes = 'border-b-2 border-primary' %>
+				<% if current_user %>
+					<%= current_user.role %>
+					<%= link_to 'Salir', logout_path, class: "#{nav_link_classes} #{params[:controller] == 'sessions' ? active_link_classes : ''}" %>
+				<% else %>
+					<%= link_to 'Ingresa', new_user_session_path, class: "#{nav_link_classes} #{params[:controller] == 'sessions' ? active_link_classes : ''}" %>
+					<%= link_to 'Registro', new_user_registration_path, class: 'ml-8 whitespace-nowrap text-base font-medium inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700' %>
+				<% end %>
+			</div>
+		</div>
+	</nav>
+>>>>>>> 06c0dc7 (Cambios a diagrama)
 </header>

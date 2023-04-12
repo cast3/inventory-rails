@@ -1,8 +1,0 @@
-<%= form_with model: category, id: "form_category", class: "table min-w-full" do |form| %>
-	<div>
-		<%= form.text_field :nombre, class: "shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-	</div>
-    <div>
-        <%= form.submit("#{action_name == "new" ? "Crear" : "Actualizar"} categoría", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-3 px-5 text-white font-medium cursor-pointer") %>
-    </div>
-<% end %>

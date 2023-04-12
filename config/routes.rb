@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
   root to: 'dashboard#index'
+=======
+  root 'pages#home'
+>>>>>>> 06c0dc7 (Cambios a diagrama)
 
   resources :categories
   resources :products do
