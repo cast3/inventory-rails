@@ -1,8 +1,1 @@
 <%= render partial: "shared/heading", locals: { title: 'Dashboard', description: '' } %>
-
-
-<%= line_chart Category.group_by_day(:created_at).count %>
-<%= line_chart Product.group_by_day(:created_at).count %>	
-
-
-<%= pie_chart 

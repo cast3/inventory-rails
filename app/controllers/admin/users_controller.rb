@@ -4,21 +4,6 @@ class Admin::UsersController < ApplicationController
 
   def edit; end
 
-  # create new user from admin
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      sign_in(@user)
-      redirect_to dashboard_index_path, notice: "[ADMIN] You are now signed in as #{@user.email}"
-    else
-      render :new
-    end
-  end
-
   def update
     @user.update(user_params)
     redirect_to edit_admin_user_path(id: @user.id), notice: 'Usuario fue actualizado exitosamente.'

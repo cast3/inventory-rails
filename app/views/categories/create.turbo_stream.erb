@@ -1,6 +1,0 @@
-<%=turbo_stream.append 'categories' do %>
-	<%= render 'category', category: @category %>
-<% end %>
-<%=turbo_stream.replace 'category_form' do %>
-	<%= render 'form', category: @category_new %>
-<% end %>
