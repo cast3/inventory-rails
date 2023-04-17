@@ -68,51 +68,6 @@ gem 'tailwindcss-rails'
 # turbo-rails - turbo
 gem 'turbo-rails'
 
-# httparty
-gem 'httparty'
-
-# importmap
-gem 'importmap-rails'
-
-# jbuilder
-gem 'jbuilder'
-
-# metamagic
-gem 'metamagic' # easily insert metatags for SEO / opengraph
-
-# pg - postgres
-gem 'pg', '~> 1.1'
-
-# puma
-gem 'puma', '~> 5.6'  
-
-# rack-cors - CORS
-gem 'rack-cors', require: 'rack/cors'
-
-# rails-i18n - internationalization - translations
-gem 'rails-i18n'
-
-# redis
-gem 'redis'
-
-# rubocop - linter
-gem 'rubocop', require: false
-
-# sprockets - asset pipeline
-gem 'sprockets-rails'
-
-# stimulus - javascript framework
-gem 'stimulus-rails'
-
-# tailwindcss
-gem 'tailwindcss-rails'
-
-# turbo-rails - turbo
-gem 'turbo-rails'
-
-# view_component
-gem 'view_component'
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 

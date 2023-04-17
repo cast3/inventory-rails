@@ -1,26 +1,22 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
-  root to: 'dashboard#index'
-=======
-  root 'pages#home'
->>>>>>> 06c0dc7 (Cambios a diagrama)
+  root to: redirect('/users/sign_in')
 
+  resources :clients
   resources :categories
+  resources :movimientos
   resources :products do
     get 'new_movement', on: :member
-    post 'create_movement', on: :member
   end
-
   resources :providers
 
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
+
   get 'logout', to: 'pages#logout', as: 'logout'
 
   resources :dashboard, only: [:index]
   resources :account, only: %i[index update]
-
 
   # admin panels
   authenticated :user, ->(user) { user.admin? } do

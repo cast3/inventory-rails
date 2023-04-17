@@ -1,0 +1,76 @@
+<div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 my-5">
+  <div class="col-span-1 md:grid-cols-1 lg:grid-cols-1 grid-rows-2">
+    <div class="row-span-1 p-2">
+      <%= line_chart [
+                       { name: "Entradas", data: [1,2,3,3,4,1,4,51,123,123] },
+                       { name: "Salidas", data: [[3,2],[1,1],2,4,5,3,2] }
+                     ], xtitle: "Tiempo", ytitle: "Cantidad", empty: "Sin movimientos existentes.", refresh: 3600, title: "Movimientos", download: { filename: "Movimiento_" + (DateTime.now.strftime("%d%m%Y%M") + (@movements.count).to_s) }, library: { backgroundColor: "#f5f5f5", titleTextStyle: { color: "#000000", fontSize: 20 }, legend: { position: "top", textStyle: { color: "#000000", fontSize: 14 } }, hAxis: { textStyle: { color: "#000000", fontSize: 14 } }, vAxis: { textStyle: { color: "#000000", fontSize: 14 } } } %>
+    </div>
+    <div class="row-span-1 p-2 mr-3 rounded-lg shadow-md border-t-2 border-primary bg-slate-100">
+      <div class="flex justify-center">
+        <h2 class="text-lg font-bold text-gray-800">Detalles del producto</h2>
+      </div>
+      <table class="table-auto w-full">
+        <tbody>
+        <tr>
+          <td class="px-4 py-[5px] font-bold">Nombre:</td>
+          <td class="px-4 py-[5px]"><%= @product.nombre %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-bold">Referencia:</td>
+          <td class="px-4 py-[5px]"><%= @product.referencia %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-bold">Fecha expiración:</td>
+          <td class="px-4 py-[5px]"><%= @product.fecha_expiracion > Date.today ? (distance_of_time_in_words(Date.today, @product.fecha_expiracion) + " restantes") : (distance_of_time_in_words(Date.today, @product.fecha_expiracion) + " expirados") %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-bold">Stock:</td>
+          <td class="px-4 py-[5px]"><%= @product.stock unless 0 %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-bold">Proveedor:</td>
+          <td class="px-4 py-[5px]"><%= search_provider_name(@product.provider_id) %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-bold">Categoría:</td>
+          <td class="px-4 py-[5px]"><%= search_cat_name(@product.category_id) %></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="flex justify-center my-5">
+        <%= link_to 'Editar', edit_product_path(@product), class: "rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium text-sm" %>
+        <div class="inline-block ml-2">
+          <%= button_to 'Eliminar', product_path(@product), method: :delete, class: "rounded-lg ml-2 rounded-lg py-3 px-5 bg-red-500 text-white hover:bg-primary-hover-700 inline-block font-medium text-sm" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-2">
+    <div class="flex justify-between mb-3">
+      <%= link_to 'Volver a productos', products_path, class: "ml-4 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+      <div class="flex justify-center md:justify-normal">
+        <%= link_to 'Nuevo movimiento', new_movement_product_path(@product), class: "rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium" %>
+      </div>
+    </div>
+    <div class="pl-4">
+      <div class="w-full h-[50vh] flex flex-col mt-5 overflow-x-auto rounded-lg shadow-md">
+        <div class="w-full">
+          <div class="min-w-full">
+            <div class="table-mov font-bold min-w-full">
+              <div>Tipo</div>
+              <div>Cantidad</div>
+              <div>Descripción</div>
+              <div>Fecha creación</div>
+              <div></div>
+            </div>
+              <%= turbo_frame_tag 'movements' do %>
+                <%= render "products/form-movement", movimiento: @movement, product: @product %>
+                <%= render partial: "products/movimiento", collection: @movements %>
+              <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

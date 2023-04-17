@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 
   def logout
     sign_out(current_user)
-    redirect_to root_path
+    redirect_to 'users/sign_in'
   end
 
   def page
