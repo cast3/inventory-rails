@@ -1,0 +1,35 @@
+<button
+    id="dropdownMenuIconHorizontalButton"
+    data-dropdown-toggle="dropdownDotsHorizontal"
+    class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-900 bg-inherent rounded-lg focus:ring-2 focus:outline-none focus:ring-gray-50"
+    type="button">
+  <svg
+        class="w-6 h-6"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+    <path
+            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+  </svg>
+</button>
+<div
+    id="dropdownDotsHorizontal"
+    class="z-10 hidden bg-white divide-y divide-gray-200 rounded-lg shadow-lg w-44">
+  <ul
+        class="py-[0.2em] text-sm text-gray-700"
+        aria-labelledby="dropdownMenuIconHorizontalButton">
+    <li>
+      <%= link_to edit_method, class: "flex justify-center items-center gap-x-2 px-4 py-2 hover:ring-primary hover:ring-1 rounded-lg " do %>
+        <%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
+        Editar
+      <% end %>
+    </li>
+  </ul>
+  <div class="py-2 text-sm">
+    <%= link_to ver_method, class: "flex justify-center items-center gap-x-2 px-4 py-2 hover:ring-primary hover:ring-1 rounded-lg " do %>
+      <%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
+      Ver
+    <% end %>
+  </div>
+</div>

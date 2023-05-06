@@ -1,0 +1,45 @@
+<tr id="<%= dom_id provider %>" class="even:bg-gray-200 text-center aspect-1">
+  <td class="px-4 py-1 whitespace-nowrap">
+      <% if action_name == "show" %>
+        <b>Nombre:</b>
+      <% end %>
+      <%= provider.nombre %>
+  </td>
+  <td class="px-4 py-1 whitespace-nowrap">
+      <% if action_name == "show" %>
+        <b>Telefono:</b>
+      <% end %>
+      <%= provider.telefono %>
+  </td>
+  <td class="px-4 py-1 whitespace-nowrap">
+      <% if action_name == "show" %>
+        <b>Dirección:</b>
+      <% end %>
+      <%= provider.direccion %>
+  </td>
+  <td class="px-4 py-1 whitespace-nowrap">
+      <% if action_name == "show" %>
+        <b>Correo:</b>
+      <% end %>
+      <%= provider.correo_electronico %>
+  </td>
+  <td class="px-4 py-1 whitespace-nowrap">
+      <% if action_name == "show" %>
+        <b>Fecha creación:</b>
+      <% end %>
+      <%= provider.created_at.strftime("%d/%m/%Y %H:%M") %>
+  </td>
+  <% if action_name != "show" %>
+    <td class="px-4 py-1 whitespace-nowrap">
+      <div class="flex flex-row flex-nowrap justify-center">
+        <%= render partial: 'shared/menu_dropdown', locals: {  ver_method: provider, edit_method: edit_provider_path(provider) } %>
+      </div>
+    </td>
+  <% end %>
+  </td>
+</tr>
+
+
+
+
+

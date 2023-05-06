@@ -30,10 +30,18 @@ module ABCLTDA
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
       g.view_specs = false
       g.helper_specs = false
-      g.assets = false # stylesheets
+      g.routing_specs = false
+      g.request_specs = false
+      g.controller_specs = false
+      g.javascripts = false
+      g.assets = true # stylesheets
       g.helper = true
     end
     config.generators.system_tests = nil
+
+    config.assets.content_type_mappings = {
+      svg: 'image/svg+xml'
+    }
 
     # i18n
     config.i18n.default_locale = :es

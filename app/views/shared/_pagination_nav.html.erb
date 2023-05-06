@@ -1,0 +1,39 @@
+<% link = pagy_link_proc(pagy, link_extra: 'class="page-link"') -%>
+<nav class="flex flex-col items-start justify-between space-y-3 p-4 md:flex-row md:items-center md:space-y-0" aria-label="Table navigation">
+  <ul class="inline-flex items-stretch">
+    <% if pagy.prev %>
+      <li>
+        <%== link.call(pagy.prev, pagy_t('pagy.nav.prev'), 'aria-label="Anterior" class="ml-0 flex h-full items-center shadow-md justify-center rounded-l-lg border-black ring-1 ring-black bg-white px-3 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700"') %>
+      </li>
+    <% else %>
+      <li>
+        <a href="#" class="ml-0 flex h-full items-center justify-center rounded-l-lg border-gray-700 shadow-md bg-white px-3 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-not-allowed"><i class="fas fa-chevron-left px-3"></i> Anterior</a>
+      </li>
+    <% end %>
+    <% pagy.series.each do |item| %>
+      <% if item.is_a?(Integer) %>
+        <li>
+          <%== link.call(item, nil, 'class="flex items-center justify-center border border-black bg-white px-3 py-2 text-sm leading-tight text-gray-500 shadow-md hover:bg-gray-100 hover:text-gray-700"') %>
+        </li>
+      <% elsif item.is_a?(String) %>
+        <li>
+          <a href="#" class="flex items-center justify-center border border-gray-500 shadow-md bg-primary px-3 py-2 text-sm leading-tight text-white cursor-not-allowed"><%== item %></a>
+        </li>
+      <% elsif item == :gap %>
+        <li>
+          <a href="#" class="flex items-center  justify-center border border-gray-500 bg-white px-3 py-2 text-sm leading-tight text-gray-500 shadow-md hover:bg-gray-100 hover:text-gray-700"><%== pagy_t('pagy.nav.gap') %></a>
+        </li>
+      <% end %>
+    <% end %>
+    <% if pagy.next %>
+      <li>
+        <%== link.call(pagy.next, pagy_t('pagy.nav.next'), 'aria-label="Siguiente" class="flex h-full items-center justify-center rounded-r-lg border border-gray-700 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 shadow-md"') %>
+      </li>
+    <% else %>
+      <li>
+        <a href="#" class="flex h-full items-center justify-center rounded-r-lg border-black bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-not-allowed shadow-md">
+          Siguiente <i class="fas fa-chevron-right px-2"></i></a>
+      </li>
+    <% end %>
+  </ul>
+</nav>

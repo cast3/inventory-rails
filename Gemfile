@@ -23,8 +23,8 @@ gem 'figaro'
 gem 'foreman'
 
 # htmlbeautifier
+gem 'erb-formatter'
 gem 'htmlbeautifier'
-gem 'solargraph', group: :development
 
 # httparty
 gem 'httparty'
@@ -62,56 +62,28 @@ gem 'sprockets-rails'
 # stimulus - javascript framework
 gem 'stimulus-rails'
 
-# tailwindcss
-gem 'tailwindcss-rails'
-
-# turbo-rails - turbo
+# turbo-rails
 gem 'turbo-rails'
-
-# httparty
-gem 'httparty'
-
-# importmap
-gem 'importmap-rails'
-
-# jbuilder
-gem 'jbuilder'
-
-# metamagic
-gem 'metamagic' # easily insert metatags for SEO / opengraph
-
-# pg - postgres
-gem 'pg', '~> 1.1'
-
-# puma
-gem 'puma', '~> 5.6'  
-
-# rack-cors - CORS
-gem 'rack-cors', require: 'rack/cors'
-
-# rails-i18n - internationalization - translations
-gem 'rails-i18n'
-
-# redis
-gem 'redis'
-
-# rubocop - linter
-gem 'rubocop', require: false
-
-# sprockets - asset pipeline
-gem 'sprockets-rails'
-
-# stimulus - javascript framework
-gem 'stimulus-rails'
 
 # tailwindcss
 gem 'tailwindcss-rails'
 
-# turbo-rails - turbo
-gem 'turbo-rails'
+# img processing
+gem 'image_processing'
 
-# view_component
-gem 'view_component'
+# caxlsx
+gem 'caxlsx'
+gem 'caxlsx_rails'
+gem 'rubyzip', '~> 2'
+
+# pagy
+gem 'net-http'
+gem 'pagy'
+gem 'pg_search'
+gem 'whenever', require: false
+
+# fontawersome
+gem 'font-awesome-sass', '~> 6.4.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
@@ -121,6 +93,7 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'faker'
 end
 
 group :development do
@@ -131,10 +104,7 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
-  gem 'shoulda-callback-matchers'
-  gem 'shoulda-matchers'
   gem 'webdrivers'
 end

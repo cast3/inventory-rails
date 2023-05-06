@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to root_path, notice: 'User was successfully destroyed.'
+    redirect_to '/', notice: 'User was successfully destroyed.'
   end
 
   private
@@ -35,6 +35,6 @@ class UsersController < ApplicationController
   end
 
   def authorize_admin
-    redirect_to root_path, alert: 'Access Denied' unless current_user.admin?
+    redirect_to '/', alert: 'Acceso denegado' unless current_user.role == 'admin'
   end
 end

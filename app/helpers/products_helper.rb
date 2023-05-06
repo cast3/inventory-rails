@@ -5,7 +5,11 @@ module ProductsHelper
   end
 
   def search_provider_name(prov_id)
-    @prov = Provider.find(prov_id)
+    @prov = Proveedor.find(prov_id)
     @prov.nombre
+  end
+
+  def base64_image(image)
+    "data:image/png;base64,#{Base64.encode64(image)}"
   end
 end

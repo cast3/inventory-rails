@@ -1,17 +1,28 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
-  root to: 'dashboard#index'
-=======
-  root 'pages#home'
->>>>>>> 06c0dc7 (Cambios a diagrama)
+  get '/', to: redirect('/users/sign_in')
 
-  resources :categories
+  # get 'movement/registrar_movimiento'
+  # get 'movement/mostrar_movimientos'
+  # get 'inventory/agregar_producto'
+  # get 'inventory/quitar_producto'
+  # get 'inventory/mostrar_inventario'
+
+  resources :inventories
+
+  resources :movements
+
   resources :products do
-    get 'new_movement', on: :member
-    post 'create_movement', on: :member
+    member do
+      get :new_movement
+      post :create_movement
+    end
   end
 
+  resources :clients
+
   resources :providers
+
+  resources :categories
 
   devise_for :users, controllers: {
     registrations: 'users/registrations'
@@ -19,11 +30,11 @@ Rails.application.routes.draw do
   get 'logout', to: 'pages#logout', as: 'logout'
 
   resources :dashboard, only: [:index]
+
   resources :account, only: %i[index update]
 
-
   # admin panels
-  authenticated :user, ->(user) { user.admin? } do
+  authenticated :user, ->(user) { user.role == 'admin' } do
     namespace :admin do
       resources :dashboard, only: [:index]
       resources :impersonations, only: [:new]

@@ -1,0 +1,30 @@
+<tr id="<%= dom_id product %>" class="border-b">
+  <th scope="row" class="flex items-center whitespace-nowrap px-4 py-3 font-medium text-gray-900">
+    <%= image_tag "data:image/png;base64,#{product.image}", class:'mr-3 h-8 w-auto object-contain', alt:'image-producto' %>
+    <%= product.nombre %>
+  </th>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= search_cat_name(product.category_id) %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= product.referencia %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    $ <%= product.precio %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <% if product.fecha_caducidad.present? %>
+      <%= product.fecha_caducidad.strftime("%d/%m/%Y") %>
+    <% else %>
+      No perecedero
+    <% end %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= product.tipo %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <div class="flex flex-row flex-nowrap justify-center gap-x-2">
+      <%= render partial: 'shared/menu_dropdown', locals: {  ver_method: product, edit_method: edit_product_path(product) } %>
+    </div>
+  </td>
+</tr>

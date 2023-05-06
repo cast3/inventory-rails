@@ -1,3 +1,27 @@
-<%= turbo_frame_tag "new-movement-form", class: "w-full" do %>
-  <%= render "form-movement", movimiento: @movement %>
+<%= form_with model: @movement, url: create_movement_product_path(@product) do |f| %>
+  <div class="form-group">
+    <%= f.label :tipo_movimiento %>
+    <%# <%= f.select :tipo_movimiento, ['entrada', 'salida'], {}, { class: 'form-control' } %>
+    <%= f.select :movement_type, options_for_select(Movement.get_tipo_movimiento,@movement.tipo_movimiento), {}, {class: 'form-control', id:'tipo_movimiento'}, data:{ controller:"tipo-movimiento", action: 'tipo-movimiento#click'}  %>
+  </div>
+  <div class="form-group">
+    <%= f.label :cantidad %>
+    <%= f.number_field :cantidad, class: 'form-control' %>
+  </div>
+  <div class="form-group" id="proveedor-wrapper">
+    <%= f.label :provider_id %>
+    <%= f.collection_select :provider_id, Provider.all, :id, :nombre, {}, { class: 'form-control' } %>
+  </div>
+  <div class="form-group" id="cliente-wrapper">
+    <%= f.label :client_id %>
+    <%= f.collection_select :client_id, Client.all, :id, :nombre, {}, { class: 'form-control' } %>
+  </div>
+  <div class="form-group">
+    <%= f.label :fecha %>
+    <%= f.date_field :fecha, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Enviar", class:'rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium' %>
+    <%= link_to "Cancelar", product_path(@product), class:'rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium' %>
+  </div>
 <% end %>
