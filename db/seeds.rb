@@ -1,41 +1,51 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
-require 'faker'
+categories = ['Despensa', 'Cuidado Personal', 'Belleza', 'Lácteos,Huevos Y Refrigerados', 'Vinos YLicores', 'Pasabocas',
+              'Frutas YVerduras', 'Aseo DeHogar', 'Dulces YPostres', 'Panadería YPastelería', 'Limpieza DeCocina', 'Bebidas', 'Mascotas', 'Cuidado DeRopa Y Calzado', 'Platos Preparados', 'Carne Y Pollo', 'Cuidado DelBebé', 'Pescados YMariscos', 'Charcutería', 'Bolsas', 'Mundo Parrilla', 'Anchetas']
 
-5.times do |_n|
+default_image_path = Rails.root.join('app', 'assets', 'images', 'default.png')
+default_image = File.open(default_image_path, 'rb').read
+image = Base64.encode64(default_image)
+
+categories.each do |category|
   categoria = Category.new
-  categoria.nombre = Faker::Name.name
+  categoria.nombre = category
   categoria.save
 end
 
-5.times do |_n|
+50.times do |_n|
   proveedores = Provider.new
   proveedores.nombre = Faker::Name.name
-  proveedores.telefono = 1234_141_241
+  proveedores.telefono = 123_414_124_1
   proveedores.direccion = Faker::Address.full_address
+  proveedores.email = Faker::Internet.email
   proveedores.save
 end
 
-# 5.times do |_n|
-#   productos = Product.new
-#   productos.nombre = Faker::Name.name
-#   productos.referencia = Faker::Number.number(digits: 10)
-#   productos.fecha_expiracion = Faker::Date.between(from: 1.year.ago, to: 1.year.from_now)
-#   productos.provider = Provider.all.sample
-#   productos.category = Category.all.sample
-#   productos.save
-# end
+50.times do |_n|
+  productos = Product.new
+  productos.nombre = Faker::Name.name
+  productos.image = image
+  productos.referencia = Faker::Number.number(digits: 10)
+  productos.tipo = Product::TYPES[rand(0..1)]
+  productos.fecha_caducidad = productos.tipo == 'Perecedero' ? Faker::Date.forward(days: 23) : nil
+  productos.precio = Faker::Number.decimal(l_digits: 2)
+  productos.category_id = rand(1..categories.length)
+  productos.save
+end
 
-# 5.times do |_n|
-#   movimiento = Movimiento.new
-#   movimiento.tipo = Movimiento::MOVEMENT_TYPES[:add]
-#   movimiento.cantidad = Faker::Number.number(digits: 2)
-#   movimiento.product = Product.all.sample
-#   movimiento.descripcion = Faker::Lorem.sentence(word_count: 3)
-#   movimiento.save
-# end
+50.times do |_n|
+  clientes = Client.new
+  clientes.cedula = Faker::Number.number(digits: 10)
+  clientes.nombre = Faker::Name.name
+  clientes.telefono = Faker::Number.number(digits: 10)
+  clientes.puntaje = 0
+  clientes.save
+end
+
+user_Admin = User.new
+user_Admin.email = 'admin@test.com'
+user_Admin.password = 'admin123'
+user_Admin.password_confirmation = 'admin123'
+user_Admin.role = 'admin'
+user_Admin.save
+
+puts 'Seed finalizado'

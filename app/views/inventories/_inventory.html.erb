@@ -1,0 +1,28 @@
+<tr id="<%= dom_id inventory %>" class="border-b">
+  <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">
+    <%= search_product_ByID(inventory.product_id).nombre %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= inventory.stock %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= inventory.cantidad_minima %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">
+    <% if search_product_ByID(inventory.product_id).fecha_caducidad === nil %>
+    <p>Ninguna</p>
+    <% elsif search_product_ByID(inventory.product_id).fecha_caducidad > Date.today %>
+      <%= tag.span(distance_of_time_in_words(Date.today, search_product_ByID(inventory.product_id).fecha_caducidad) + " restantes", class: 'text-green-700') %>
+    <% else %>
+      <%= tag.span(distance_of_time_in_words(Date.today, search_product_ByID(inventory.product_id).fecha_caducidad) + " expirados", class: 'text-red-700') %>
+    <% end %>
+</td>
+<td class="px-4 py-3 whitespace-nowrap">
+  <%= inventory.updated_at %>
+</td>
+<td class="px-4 py-3 whitespace-nowrap">
+  <div class="flex flex-row flex-nowrap justify-center gap-x-2">
+    <%= render partial: 'shared/menu_dropdown', locals: {  ver_method: inventory, edit_method: edit_inventory_path(inventory) } %>
+  </div>
+</td>
+</tr>

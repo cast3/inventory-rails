@@ -15,7 +15,7 @@ export default class extends Controller {
         const cliente = document.getElementById('cliente-wrapper')
         const proveedor = document.getElementById('proveedor-wrapper')
 
-        if ((movimiento.style.display = tipoSelect === 'Entrada')) {
+        if ((movimiento.style.display = tipoSelect == 0)) {
             proveedor.style.display = 'block'
             cliente.style.display = 'none'
         } else {

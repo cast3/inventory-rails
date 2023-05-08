@@ -1,28 +1,30 @@
 class Inventory < ApplicationRecord
+  include PgSearch::Model
+
+  pg_search_scope :search_by_name, against: [:stock], using: {
+    tsearch: {
+      dictionary: "spanish",
+      any_word: true,
+      prefix: true,
+    }
+  }
+
   belongs_to :product
 
-  def initialize
-    @products = {}
+  validates :stock, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :cantidad_minima, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  before_save :verificar_cantidad_disponible
+
+  def proveedores
+    Provider.joins(:inventories).where(inventories: { product_id: product.id })
   end
 
-  def agregar_producto(product)
-    if @products.key?(product.id)
-      @products[product.id].cantidad += product.cantidad
-    else
-      @products[product.id] = product
-    end
-  end
+  private
 
-  def quitar_producto(id, cantidad)
-    if @products.key?(id) && @products[id].cantidad >= cantidad
-      @products[id].cantidad -= cantidad
-      @products.delete(id) if @products[id].cantidad.zero?
-    else
-      puts 'No se pudo quitar el product. Verifique la cantidad o el ID.'
-    end
-  end
+  def verificar_cantidad_disponible
+    return unless stock.negative?
 
-  def mostrar_inventario
-    @products.values.each { |product| puts "#{product} - Cantidad: #{product.cantidad}" }
+    errors.add(:stock, 'No puede ser negativa')
+    throw :abort
   end
 end

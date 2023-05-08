@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to @user, notice: 'Usuario ha sido actualizado exitosamente.'
     else
       render :edit
     end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to '/', notice: 'User was successfully destroyed.'
+    redirect_to '/', notice: 'Usuario ha sido eliminado exitosamente.'
   end
 
   private

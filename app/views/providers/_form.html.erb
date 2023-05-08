@@ -1,7 +1,7 @@
 <%= form_with(model: provider, class: "contents") do |form| %>
   <% if provider.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><strong>No se pudo crear el proveedor:</strong></h2>
+      <h2><%= pluralize(provider.errors.count, "error") %> no permitieron que este proveedor fuera guardado:</h2>
       <ul>
         <% provider.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -25,7 +25,7 @@
   </div>
   <div class="my-5">
     <%= form.label 'Email' %>
-    <%= form.text_field :correo_electronico, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "ejemplo@email.com", maxlength:'60' %>
+    <%= form.text_field :email, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "ejemplo@email.com", maxlength:'60' %>
   </div>
   <div class="my-5">
     <div class="flex justify-center flex-row">
@@ -34,17 +34,3 @@
     </div>
   </div>
 <% end %>
-
-<%# <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
-        const submitBtn = document.querySelector('#submit-btn');
-
-        form.addEventListener('submit', function (event) {
-            if (!form.nombre.value || !form.telefono.value || !form.direccion.value) {
-                event.preventDefault();
-                submitBtn.disabled = true;
-            }
-        });
-    });
-</script> %>

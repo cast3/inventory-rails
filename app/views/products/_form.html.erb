@@ -1,7 +1,7 @@
 <%= form_with(model: product, class: "contents") do |form| %>
   <% if product.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><strong>No se pudo crear el producto, revisa:</strong></h2>
+      <h2><%= pluralize(client.errors.count, "error") %> no permitieron que este producto fuera guardado:</h2>
       <ul>
         <% product.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -12,11 +12,11 @@
   <div class="grid grid-flow-row grid-cols-2 items-center gap-x-2 mt-5">
     <div class="col-span-1">
       <%= form.label :nombre, class: "block mt-1 mb-1" %>
-      <%= form.text_field :nombre, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", maxlength:'50' %>
+      <%= form.text_field :nombre, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", maxlength:'50', placeholder: 'Nombre del producto' %>
     </div>
     <div class="col-span-1">
       <%= form.label :referencia,class: "block mt-1 mb-1" %>
-      <%= form.text_field :referencia, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", maxlength:'15' %>
+      <%= form.text_field :referencia, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", maxlength:'15', placeholder: 'Número de referencia' %>
     </div>
   </div>
   <div class="grid grid-flow-row grid-cols-2 items-center gap-x-2">
@@ -26,7 +26,7 @@
     </div>
     <div class="col-span-1">
       <%= form.label :precio, "Precio", class: "block mt-1 mb-1" %>
-      <%= form.number_field :precio, step: 1, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min:1 %>
+      <%= form.number_field :precio, step: 1, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min:1, placeholder: 'Precio del producto' %>
     </div>
   </div>
   <div class="grid grid-flow-row grid-cols-2 items-center gap-x-2">

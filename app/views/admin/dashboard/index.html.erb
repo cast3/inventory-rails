@@ -1,53 +1,54 @@
 <%= render partial: "shared/heading", locals: { title: 'Admin Dashboard', description: '' } %>
 <div class="max-w-3xl mx-auto px-4">
-	<div class="mb-4">
-		<h3 class="font-semibold">Registros</h3>
-		<%= line_chart User.where(created_at: 3.months.ago..Time.now).group_by_week(:created_at).count %>
-	</div>
-	<div class="overflow-x-auto">
-		<div class="py-2 align-middle inline-block sm:px-6 lg:px-8">
-			<div class="shadow border-b border-gray-200 sm:rounded-lg">
-				<table class="divide-y divide-gray-200 border">
-					<thead class="bg-gray-50">
-						<tr>
-							<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-								Registro
-							</th>
-							<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-								Correo
-							</th>
-							<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-								Acciones
-							</th>
-							<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-								Ingresar como
-							</th>
-						</tr>
-					</thead>
-					<tbody class="bg-white divide-y divide-gray-200">
-						<% @users.each do |user| %>
-							<tr>
-								<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-									<%= user.created_at.in_time_zone('America/Bogota').strftime('%F %H:%M') %>
-								</td>
-								<td class="px-6 py-4 whitespace-wrap text-sm text-gray-500">
-									<%= user.email %>
-								</td>
-								<td class="px-6 py-4 whitespace-wrap text-sm text-gray-500">
-									<%= link_to 'Editar', edit_admin_user_path(id: user.id), class: 'text-indigo-500' %>
-								</td>
-								<% if user.id != current_user.id %>
-									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex justify-center">
-										<%= link_to new_admin_impersonation_path(user_id: user.id) do %>
-											<%= image_tag 'svgs/IconIngresarComo.svg', class: 'w-6 h-6' %>
-										<% end %>
-									</td>
-								<% end %>
-							</tr>
-						<% end %>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+  <div class="mb-4">
+    <h3 class="font-semibold">Registros</h3>
+    <%= line_chart User.where(created_at: 3.months.ago..Time.now).group_by_week(:created_at).count %>
+  </div>
+  <div class="overflow-x-auto">
+    <div class="py-2 align-middle inline-block sm:px-6 lg:px-8">
+      <div class="shadow border-b border-gray-200 sm:rounded-lg">
+        <table class="divide-y divide-gray-200 border">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Registro
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Correo
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Acciones
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Ingresar como
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @users.each do |user| %>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= user.created_at.in_time_zone('America/Bogota').strftime('%F %H:%M') %>
+                </td>
+                <td class="px-6 py-4 whitespace-wrap text-sm text-gray-500">
+                  <%= user.email %>
+                </td>
+                <td class="px-6 py-4 whitespace-wrap text-sm text-gray-500">
+                  <%= link_to 'Editar', edit_admin_user_path(id: user.id), class: 'text-indigo-500' %>
+                </td>
+                <% if user.id != current_user.id %>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex justify-center">
+                    <%= link_to new_admin_impersonation_path(user_id: user.id) do %>
+                      <%= image_tag 'svgs/IconIngresarComo.svg', class: 'w-6 h-6' %>
+                    <% end %>
+                  </td>
+                <% end %>
+                <td class="px-6 py-4 whitespace-wrap text-sm text-gray-500 text-center">Yo</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,134 @@
+<div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 my-5">
+  <div class="col-span-1 md:grid-cols-1 lg:grid-cols-1 grid-rows-2 px-4">
+    <div class="row-span-1 p-2">
+            <%= line_chart [
+                       { name: "Entradas", data: @movements.where(inventory_id: @inventory.id, tipo_movimiento: 0).group_by_week(:created_at).count },
+                       { name: "Salidas", data: @movements.where(inventory_id: @inventory.id, tipo_movimiento: 1).group_by_week(:created_at).count }
+                     ], xtitle: "Tiempo", ytitle: "Cantidad", empty: "Sin movimientos existentes.", title: "Movimientos", download: { filename: "Movimiento_" + (DateTime.now.strftime("%d%m%Y%M") + (@movements.count).to_s) }, library: { backgroundColor: "#f5f5f5", titleTextStyle: { color: "#000000", fontSize: 20 }, legend: { position: "top", textStyle: { color: "#000000", fontSize: 14 } }, hAxis: { textStyle: { color: "#000000", fontSize: 14 } }, vAxis: { textStyle: { color: "#000000", fontSize: 14 } } } %>
+    </div>
+    <div class="row-span-1 p-2 mr-3 rounded-lg shadow-md border-t-2 border-primary bg-white">
+      <div class="flex justify-center my-4">
+        <h2 class="text-lg font-bold text-primary whitespace-nowrap text-left pl-4">Detalles del producto</h2>
+          <div class = "flex justify-center relative w-full">
+            <%= image_tag "data:image/png;base64,#{@product.image}", class:'absolute rounded-full right-0 -top-5 w-[70px] h-[70px] object-contain', alt:'image-producto' %>
+          </div>
+      </div>
+      <table class="table-auto w-full">
+        <tbody class="font-regular text-sm">
+        <tr>
+          <td class="px-4 py-[5px] font-semibold">Nombre:</td>
+          <td class="px-4 py-[5px]"><%= @product.nombre %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-semibold">Referencia:</td>
+          <td class="px-4 py-[5px]"><%= @product.referencia %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-semibold">Fecha expiración:</td>
+           <% if search_product_ByID(@inventory.product_id).fecha_caducidad === nil %>
+           <td class="px-4 py-[5px]">Ninguna</p></td>
+          <% elsif search_product_ByID(@inventory.product_id).fecha_caducidad > Date.today %>
+            <td class="px-4 py-[5px]"><%= tag.span(distance_of_time_in_words(Date.today, search_product_ByID(@inventory.product_id).fecha_caducidad) + " restantes", class: 'text-green-900') %></td>
+          <% else %>
+            <td class="px-4 py-[5px]"><%= tag.span(distance_of_time_in_words(Date.today, search_product_ByID(@inventory.product_id).fecha_caducidad) + " expirados", class: 'text-red-900') %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-semibold">Stock:</td>
+          <% if @inventory.stock > @inventory.cantidad_minima %>
+            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-green-900') %></td>
+          <% elsif @inventory.stock < @inventory.cantidad_minima %>
+            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-red-900') %></td>
+          <% else %>
+            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-yellow-900') %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-semibold">Stock minimo:</td>
+          <td class="px-4 py-[5px]"><%= @inventory.cantidad_minima %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-semibold">Categoría:</td>
+          <td class="px-4 py-[5px]"><%= search_cat_name(@product.category_id) %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px] font-semibold">Proveedor:</td>
+          <td class="px-4 py-[5px]">
+          <% @providers.each do |provider| %>
+              <%= provider.nombre %>
+          <% end %></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="flex justify-center my-5">
+          <%= link_to edit_inventory_path(@inventory), class: "hover:text-primary-700 flex items-center justify-center rounded-lg border border-gray-200 bg-white border border-black px-4 md:px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+              Editar
+          <% end %>
+        <div class="inline-block ml-2">
+          <%= button_to 'Eliminar', product_path(@product), method: :delete, class: "rounded-lg ml-2 rounded-lg py-3 px-5 bg-red-500 text-white hover:bg-primary-hover-700 inline-block font-medium text-sm" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-2 px-4">
+    <div class="flex justify-between my-5 items-center p-2 flex-wrap gap-4">
+        <%= link_to inventories_path, class: "hover:text-primary-700 flex w-full lg:w-auto items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-5 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+            Volver al inventario
+        <% end %>
+      <div class="flex justify-end md:justify-around gap-4 md:gap-x-4">
+        <%= link_to new_movement_inventory_path(@inventory), class: "hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-5 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+          <%= image_tag "svgs/IconPlus.svg", class: "text-primary stroke-primary h-6 mr-3" %>
+          Nuevo movimiento
+        <% end %>
+        <%= link_to products_path( id: @Products, format: :xlsx), class: "hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-5 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+          Exportar
+          <%= image_tag "svgs/IconExcel.svg", class: "text-primary stroke-primary h-6 ml-3" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="p-2">
+      <div class="w-full h-[545px] flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-gray-500">
+            <thead class="text-xs uppercase sticky top-0 bg-primary text-white z-10">
+                <tr>
+                  <th class="px-4 py-3 tracking-wider">Tipo</th>
+                  <th class="px-4 py-3 tracking-wider">Cantidad</th>
+                  <th class="px-4 py-3 tracking-wider">Descripción</th>
+                  <th class="px-4 py-3 tracking-wider">Fecha creación</th>
+                  <th class="px-4 py-3 tracking-wider">Responsable</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white overflow-auto">
+                <% @movements.each do |movement| %>
+                  <tr>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      <%= movement.nombre_tipo_movimiento %>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      <%= movement.cantidad %>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      <%= movement.descripcion %>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      <%= movement.created_at %>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      <% if movement.client_id.present? %>
+                        <%= Client.find(movement.client_id).nombre %>
+                      <% else %>
+                        <%= Provider.find(movement.provider_id).nombre %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

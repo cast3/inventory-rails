@@ -1,22 +1,20 @@
-<div id="<%= dom_id client %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Nombre:</strong>
-    <%= client.nombre %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Email:</strong>
-    <%= client.email %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Puntaje:</strong>
-    <%= client.puntaje %>
-  </p>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show this client", client, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this client', edit_client_path(client), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
 </div>
+<tr id="<%= dom_id client %>" class="border-b">
+  <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">
+    <%= client.cedula %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap ">
+    <%= client.nombre %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= client.telefono %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= client.puntaje %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <div class="flex flex-row flex-nowrap justify-center gap-x-2">
+      <%= render partial: 'shared/menu_dropdown', locals: {  ver_method: client, edit_method: edit_inventory_path(client) } %>
+    </div>
+  </td>
+</tr>

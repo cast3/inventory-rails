@@ -1,106 +1,53 @@
-<div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 my-5">
-  <div class="col-span-1 md:grid-cols-1 lg:grid-cols-1 grid-rows-2">
-    <div class="row-span-1 p-2">
-            <%= line_chart [
-                       { name: "Entradas", data: @movements.where(product_id: @product.id, tipo: 0).group_by_week(:created_at).count },
-                       { name: "Salidas", data: @movements.where(product_id: @product.id, tipo: 1).group_by_week(:created_at).count }
-                     ], xtitle: "Tiempo", ytitle: "Cantidad", empty: "Sin movimientos existentes.", refresh: 3600, title: "Movimientos", download: { filename: "Movimiento_" + (DateTime.now.strftime("%d%m%Y%M") + (@movements.count).to_s) }, library: { backgroundColor: "#f5f5f5", titleTextStyle: { color: "#000000", fontSize: 20 }, legend: { position: "top", textStyle: { color: "#000000", fontSize: 14 } }, hAxis: { textStyle: { color: "#000000", fontSize: 14 } }, vAxis: { textStyle: { color: "#000000", fontSize: 14 } } } %>
-    </div>
-    <div class="row-span-1 p-2 mr-3 rounded-lg shadow-md border-t-2 border-primary bg-slate-100">
-      <div class="flex justify-center my-4">
+<div class="flex justify-center items-center h-screen">
+  <div class="w-full sm:w-[80%] md:w-[60%] lg:w-[50%] bg-white rounded-lg">
+    <div class="grid grid-flow-col grid-cols-4">
+      <div class="col-span-1">
+        <%= image_tag "data:image/png;base64,#{@product.image}", class:'object-contain w-full h-full', alt:'image-producto' %>
+      </div>
+      <div class="col-span-3 p-4">
         <h2 class="text-lg font-bold text-primary whitespace-nowrap text-left pl-4">Detalles del producto</h2>
-          <div class = "flex justify-center relative w-full">
-            <%= image_tag "data:image/png;base64,#{@product.image}", class:'absolute rounded-full right-0 -top-5 w-[70px] h-[70px] object-contain', alt:'image-producto' %>
-          </div>
-      </div>
-      <table class="table-auto w-full">
-        <tbody class="font-regular text-sm">
-        <tr>
-          <td class="px-4 py-[5px] font-semibold">Nombre:</td>
-          <td class="px-4 py-[5px]"><%= @product.nombre %></td>
-        </tr>
-        <tr>
-          <td class="px-4 py-[5px] font-semibold">Referencia:</td>
-          <td class="px-4 py-[5px]"><%= @product.referencia %></td>
-        </tr>
-        <tr>
-          <td class="px-4 py-[5px] font-semibold">Fecha expiración:</td>
-          <% if @product.fecha_caducidad.present? %>
-            <td class="px-4 py-[5px]"><%= @product.fecha_caducidad > Date.today ? (distance_of_time_in_words(Date.today, @product.fecha_caducidad) + " restantes") : (distance_of_time_in_words(Date.today, @product.fecha_caducidad) + " expirados") %></td>
-          <% else %>
-            <td class="px-4 py-[5px]">
-              No perecedero
-            </td>
-          <% end %>
-        </tr>
-        <tr>
-          <td class="px-4 py-[5px] font-semibold">Stock:</td>
-          <td class="px-4 py-[5px]"><%= @product.stock unless 0 %></td>
-        </tr>
-        <tr>
-          <td class="px-4 py-[5px] font-semibold">Categoría:</td>
-          <td class="px-4 py-[5px]"><%= search_cat_name(@product.category_id) %></td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="flex justify-center my-5">
-        <%= link_to 'Editar', edit_product_path(@product), class: "rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium text-sm" %>
-        <div class="inline-block ml-2">
-          <%= button_to 'Eliminar', product_path(@product), method: :delete, class: "rounded-lg ml-2 rounded-lg py-3 px-5 bg-red-500 text-white hover:bg-primary-hover-700 inline-block font-medium text-sm" %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-span-2">
-    <div class="flex justify-between mb-3">
-      <%= link_to 'Volver a productos', products_path, class: "ml-4 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
-      <div class="flex justify-center md:justify-normal">
-        <%= link_to 'Nuevo movimiento', new_movement_product_path(@product), class: "rounded-lg py-3 px-5 bg-primary hover:bg-primary-hover-700 text-white block font-medium" %>
-        <%= link_to products_path( id: @Products, format: :xlsx), class: "hover:text-primary-700 flex w-full w-[15dvw] items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
-          Exportar
-          <%= image_tag "svgs/IconExcel.svg", class: "text-primary stroke-primary h-6 ml-3" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="pl-4">
-      <div class="w-full h-[50vh] flex flex-col mt-5 overflow-x-auto rounded-lg shadow-md">
-        <div class="flex-1 bg-white overflow-auto">
-          <table class="table-fixed min-w-full">
-            <thead class="sticky top-0 bg-primary text-white">
-              <tr>
-                <th class="px-4 py-2 tracking-wider">Tipo</th>
-                <th class="px-4 py-2 tracking-wider">Cantidad</th>
-                <th class="px-4 py-2 tracking-wider">Descripción</th>
-                <th class="px-4 py-2 tracking-wider">Fecha creación</th>
-                <th class="px-4 py-2 tracking-wider">Responsable</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white overflow-auto">
-              <% @product.movements.each do |movement| %>
-                <tr>
-                  <td class="px-4 py-2 whitespace-nowrap">
-                    <%= movement.nombre_tipo_movimiento %>
-                  </td>
-                  <td class="px-4 py-2 whitespace-nowrap">
-                    <%= movement.cantidad %>
-                  </td>
-                  <td class="px-4 py-2 whitespace-nowrap">
-                    <%= movement.descripcion %>
-                  </td>
-                  <td class="px-4 py-2 whitespace-nowrap">
-                    <%= movement.created_at %>
-                  </td>
-                  <td class="px-4 py-2 whitespace-nowrap">
-                    <% if movement.cliente_id.present? %>
-                      <%= movement.cliente_id %>
-                    <% else %>
-                      <%= movement.proveedor_id %>
-                    <% end %>
-                  </td>
-                </tr>
-            </tbody>
-          </table>
-          </div>
+        <table class="table-auto w-full my-5">
+          <tbody class="font-regular text-sm">
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Nombre:</td>
+            <td class="px-4 py-[5px]"><%= @product.nombre %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Referencia:</td>
+            <td class="px-4 py-[5px]"><%= @product.referencia %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Precio:</td>
+            <td class="px-4 py-[5px]"><%= @product.precio %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Tipo:</td>
+            <td class="px-4 py-[5px]"><%= @product.tipo %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Fecha caducidad:</td>
+            <% if @product.fecha_caducidad.present? %>
+              <td class="px-4 py-[5px]"><%= @product.fecha_caducidad > Date.today ? (distance_of_time_in_words(Date.today, @product.fecha_caducidad) + " restantes") : (distance_of_time_in_words(Date.today, @product.fecha_caducidad) + " expirados") %></td>
+            <% else %>
+              <td class="px-4 py-[5px]">
+                No perecedero
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Categoría:</td>
+            <td class="px-4 py-[5px]"><%= search_cat_name(@product.category_id) %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Fecha creación:</td>
+            <td class="px-4 py-[5px]"><%= @product.created_at.strftime("%d/%m/%Y %H:%M:%S") %></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="flex justify-center items-center gap-x-4 w-full flex-wrap">
+          <%= link_to 'Editar', edit_product_path(@product), class: "rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 whitespace-nowrap font-medium text-sm" %>
+          <%= button_to 'Eliminar', product_path(@product), method: :delete, class: "rounded-lg rounded-lg py-3 px-5 bg-red-500 text-white hover:bg-primary-hover-700 whitespace-nowrap font-medium text-sm" %>
+          <%= link_to 'Volver a productos', products_path, class: "rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 whitespace-nowrap font-medium" %>
         </div>
       </div>
     </div>

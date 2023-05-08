@@ -1,0 +1,38 @@
+<%= form_with model: @movement, class: "contents", url: create_movement_inventory_path(@inventory), local: true do |f| %>
+  <% if @movement.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(@movement.errors.count, "error") %> no permitieron que este acción fuera guardada:</h2>
+      <ul>
+        <% @movement.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="grid grid-flow-row grid-cols-2 items-center gap-x-2 mt-5">
+    <div class="col-span-1">
+      <%= f.label :tipo_movimiento %>
+      <%= f.select :tipo_movimiento, options_for_select(Movement.get_tipo_movimiento, @movement.tipo_movimiento), { prompt: 'Seleccione un tipo de movimiento' }, {class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full', id: 'tipo_movimiento', data: { controller: 'tipo-movimiento', action: 'tipo-movimiento#click' } } %>
+    </div>
+    <div class="col-span-1">
+      <%= f.label :cantidad %>
+      <%= f.number_field :cantidad, step: 1, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 0, placeholder: 'Cantidad' %>
+    </div>
+  </div>
+  <div class="my-5">
+    <%= f.label :descripcion %>
+    <%= f.text_area :descripcion, class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full', placeholder: 'Descripción', maxlength: 120 %>
+  </div>
+  <div class="my-5" id="proveedor-wrapper">
+    <%= f.label "Proveedor" %>
+    <%= f.collection_select :provider_id, Provider.all.order(nombre: :asc), :id, :nombre, { prompt: 'Seleccione un proveedor' }, { class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full' } %>
+  </div>
+  <div class="my-5" id="cliente-wrapper">
+    <%= f.label "Cliente" %>
+      <%= f.collection_select :client_id, Client.all.order(nombre: :asc), :id, :nombre, { prompt: 'Seleccione un cliente' }, { class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full' } %>
+  </div>
+  <div class="flex justify-center flex-row">
+    <%= f.submit "Añadir movimiento", class:'bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer' %>
+    <%= link_to "Volver al inventario", inventory_path(@inventory), class:'ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium' %>
+  </div>
+<% end %>

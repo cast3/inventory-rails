@@ -1,23 +1,28 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
-  # GET /clients or /clients.json
   def index
     @clients = Client.all.order('created_at DESC')
+    @clients = @clients.search(params[:query]) if params[:query].present?
+    @pagy, @clients = pagy @clients.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
+
+    respond_to do |format|
+      format.html
+      format.xlsx do
+        render xlsx: 'index', filename: 'Listado de clientes.xlsx'
+      end
+    end
   end
 
-  # GET /clients/1 or /clients/1.json
   def show; end
 
-  # GET /clients/new
   def new
     @client = Client.new
   end
 
-  # GET /clients/1/edit
   def edit; end
 
-  # POST /clients or /clients.json
   def create
     @client = Client.new(client_params)
 
@@ -32,7 +37,6 @@ class ClientsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /clients/1 or /clients/1.json
   def update
     respond_to do |format|
       if @client.update(client_params)
@@ -45,7 +49,6 @@ class ClientsController < ApplicationController
     end
   end
 
-  # DELETE /clients/1 or /clients/1.json
   def destroy
     @client.destroy
 
@@ -57,13 +60,19 @@ class ClientsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_client
     @client = Client.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def client_params
-    params.require(:client).permit(:nombre, :apellido, :email, :telefono, :direccion)
+    params.require(:client).permit(:nombre, :cedula, :telefono, :puntaje)
+  end
+
+  def sort_column
+    %w[nombre cedula referencia telefono puntaje].include?(params[:sort]) ? params[:sort] : 'nombre'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 end

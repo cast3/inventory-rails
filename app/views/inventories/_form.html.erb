@@ -1,0 +1,29 @@
+<%= form_with(model: inventory, class: "contents") do |form| %>
+  <% if inventory.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(inventory.errors.count, "error") %> no permitieron que este acción fuera guardada:</h2>
+      <ul>
+        <% inventory.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="my-5">
+    <%= form.label "Producto" %>
+    <%= form.collection_select :product_id, Product.all.order(nombre: :asc), :id, :nombre, { prompt: 'Seleccione un producto' }, { class: 'block shadow-md rounded-md border border-gray-400 outline-none px-3 py-2 w-full' } %>
+  </div>
+  <div class="my-5">
+    <%= form.label :stock %>
+    <%= form.number_field :stock, step: 1, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 0, placeholder: 'Stock inicial' %>
+  </div>
+  <div class="my-5">
+    <%= form.label :cantidad_minima %>
+    <%= form.number_field :cantidad_minima, step: 1, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 0, placeholder: 'Cantidad minima' %>
+  </div>
+  <div class="flex justify-center flex-row">
+    <%= form.submit "#{action_name == "new" ? "Añadir" : "Actualizar"} producto", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>
+    <%= link_to "Volver al inventario", inventories_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+    <%= link_to "Detalles", inventory, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+  </div>
+<% end %>

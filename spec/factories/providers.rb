@@ -3,6 +3,6 @@ FactoryBot.define do
     nombre { "MyString" }
     direccion { "MyString" }
     telefono { "MyString" }
-    correo_electronico { "MyString" }
+    email { "MyString" }
   end
 end

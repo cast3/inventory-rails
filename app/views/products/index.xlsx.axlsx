@@ -1,0 +1,15 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  # Define estilo para el encabezado de la tabla
+  table_header = s.add_style(bg_color: "333333", fg_color: "FFFFFF", b: true)
+
+  wb.add_worksheet(name: "Listado de Productos#{Date.today}") do |sheet|
+    # Define encabezados de la tabla
+    sheet.add_row ["ID", "Nombre", "Referencia", "Precio", "Categoría" , "Fecha caducidad"], style: table_header
+
+    @products.each do |product|
+      # Añade datos de cada producto a la tabla
+      sheet.add_row [product.id, product.nombre, product.referencia, product.precio, search_cat_name(product.category_id), product.fecha_caducidad]
+    end
+  end
+end

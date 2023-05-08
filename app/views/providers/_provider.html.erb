@@ -1,36 +1,36 @@
-<tr id="<%= dom_id provider %>" class="even:bg-gray-200 text-center aspect-1">
-  <td class="px-4 py-1 whitespace-nowrap">
+<tr id="<%= dom_id provider %>" class="aspect-1 border-b">
+  <td class="px-4 py-3 whitespace-nowrap text-black font-medium">
       <% if action_name == "show" %>
         <b>Nombre:</b>
       <% end %>
       <%= provider.nombre %>
   </td>
-  <td class="px-4 py-1 whitespace-nowrap">
+  <td class="px-4 py-3 whitespace-nowrap">
       <% if action_name == "show" %>
         <b>Telefono:</b>
       <% end %>
       <%= provider.telefono %>
   </td>
-  <td class="px-4 py-1 whitespace-nowrap">
+  <td class="px-4 py-3 break-words overflow-clip">
       <% if action_name == "show" %>
         <b>Dirección:</b>
       <% end %>
       <%= provider.direccion %>
   </td>
-  <td class="px-4 py-1 whitespace-nowrap">
+  <td class="px-4 py-3 break-words overflow-clip">
       <% if action_name == "show" %>
         <b>Correo:</b>
       <% end %>
-      <%= provider.correo_electronico %>
+      <%= provider.email %>
   </td>
-  <td class="px-4 py-1 whitespace-nowrap">
+  <td class="px-4 py-3 whitespace-nowrap">
       <% if action_name == "show" %>
         <b>Fecha creación:</b>
       <% end %>
       <%= provider.created_at.strftime("%d/%m/%Y %H:%M") %>
   </td>
   <% if action_name != "show" %>
-    <td class="px-4 py-1 whitespace-nowrap">
+    <td class="px-4 py-3 whitespace-nowrap">
       <div class="flex flex-row flex-nowrap justify-center">
         <%= render partial: 'shared/menu_dropdown', locals: {  ver_method: provider, edit_method: edit_provider_path(provider) } %>
       </div>
@@ -38,7 +38,6 @@
   <% end %>
   </td>
 </tr>
-
 
 
 

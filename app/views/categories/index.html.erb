@@ -1,19 +1,23 @@
-<div class="w-full my-5">
-	<div class="flex justify-between items-center">
-		<h1 class="font-bold text-4xl px-4">Categorías</h1>
-		<br>
-	</div>
-	<div class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
-		<%= link_to new_category_path, class: "hover:text-primary-700 flex w-full md:w-[15dvw] items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
-			<%= image_tag "svgs/IconPlus.svg", class: "text-primary stroke-primary h-6 mr-3" %>
-			Nueva categoría
-		<% end %>
-	</div>
-	<div id="categories" class="mt-5 overflow-x-auto px-4">
-		<div class="w-full h-[50vh] flex flex-col gap-3">
-			<div class="flex-1 overflow-auto">
-				<%= render @categories %>
+<section class="my-5 w-full">
+  <div class="mx-auto max-w-screen-xl px-4">
+		<div class="w-full my-10 sm:my-5">
+			<div class="flex justify-between items-center">
+				<h1 class="font-bold text-4xl px-4">Categorías</h1>
+				<br>
+			</div>
+			<div class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0 mb-3 px-4 sm:px-10 pt-2">
+				<%= link_to new_category_path, class: "hover:text-primary-700 flex w-full sm:w-auto items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+					<%= image_tag "svgs/IconPlus.svg", class: "text-primary stroke-primary h-6 mr-3" %>
+					Nueva categoría
+				<% end %>
+			</div>
+			<div id="categories" class="mt-5 overflow-x-auto px-4">
+				<div class="w-full h-[500px] flex flex-col gap-3">
+					<div class="flex-1 overflow-auto">
+						<%= render @categories %>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</section>

@@ -1,0 +1,15 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  # Define estilo para el encabezado de la tabla
+  table_header = s.add_style(bg_color: "333333", fg_color: "FFFFFF", b: true)
+
+  wb.add_worksheet(name: "Listado de clientes#{Date.today}") do |sheet|
+    # Define encabezados de la tabla
+    sheet.add_row ["ID", "Cedula", "Nombre del cliente", "Telefono", "Puntaje" , "Fecha creación"], style: table_header
+
+    @clients.each do |client|
+      # Añade datos de cada cliento a la tabla
+      sheet.add_row [client.id, client.nombre, client.telefono, client.puntaje, client.created_at.strftime("%d/%m/%Y %H:%M")]
+    end
+  end
+end

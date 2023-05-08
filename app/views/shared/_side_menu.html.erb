@@ -16,7 +16,7 @@
     </div>
     <nav aria-label="Main" class="mt-[4rem]">
       <% if current_user.role === 'admin' %>
-        <%= link_to admin_dashboard_index_path, class: "#{nav_link_classes} #{params[:controller] == 'admin' ? active_link_classes : ''}" do %>
+        <%= link_to admin_dashboard_index_path, class: "#{nav_link_classes} #{params[:controller] == 'admin/dashboard' ? active_link_classes : ''}" do %>
           <%= image_tag "svgs/IconAdmin.svg", class: "h-6 mr-3" %>
           <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Admin </span>
         <% end %>
@@ -28,6 +28,10 @@
       <%= link_to products_path, class: "#{nav_link_classes} #{params[:controller] == 'products' ? active_link_classes : ''}" do %>
         <%= image_tag "svgs/IconCaja.svg", class: "h-6 mr-3" %>
         <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Productos </span>
+      <% end %>
+      <%= link_to inventories_path, class: "#{nav_link_classes} #{params[:controller] == 'inventories' ? active_link_classes : ''}" do %>
+        <%= image_tag "svgs/IconInventory.svg", class: "h-6 mr-3" %>
+        <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Inventario </span>
       <% end %>
       <%= link_to categories_path, class: "#{nav_link_classes} #{params[:controller] == 'categories' ? active_link_classes : ''}" do %>
         <%= image_tag "svgs/IconCat.svg", class: "h-6 mr-3" %>

@@ -4,7 +4,7 @@ class CreateProviders < ActiveRecord::Migration[7.0]
       t.string :nombre
       t.string :direccion
       t.string :telefono
-      t.string :correo_electronico
+      t.string :email
 
       t.timestamps
     end

@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all.order(created_at: :desc)
-    @products = @products.search(params[:query]) if params[:query].present?
+    @products = Product.search_by_name(params[:query]) if params[:query].present?
     @pagy, @products = pagy @products.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
     respond_to do |format|
@@ -15,16 +15,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def show
-    @movements = Movement.where(product_id: @product.id)
-    respond_to do |format|
-      format.html
-      format.xlsx do
-        response.headers['Content-Disposition'] =
-          "attachment; filename=\"Listado de movimientos - #{@product.id}.xlsx\""
-      end
-    end
-  end
+  def show; end
 
   def new
     @product = Product.new
@@ -60,7 +51,9 @@ class ProductsController < ApplicationController
       image = params[:product][:image].read
       @product.image = Base64.encode64(image)
     else
-      image = File.open(Rails.root.join('app', 'assets', 'images', 'default.png'), 'rb').read
+      default_image_path = Rails.root.join('app', 'assets', 'images', 'default.png')
+      default_image = File.open(default_image_path, 'rb').read
+      @product.image = Base64.encode64(default_image)
     end
 
     respond_to do |format|
@@ -75,51 +68,28 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
+    inventoryItem = Inventory.where(product_id: @product.id)
 
+    if inventoryItem.present?
+      hasCantidadDisponible = inventoryItem.first.stock
+      throw 'No se puede eliminar el producto porque tiene inventario' if hasCantidadDisponible > 0
+    end
+
+    @product.destroy
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Producto ha sido eliminado exitosamente.' }
       format.json { head :no_content }
     end
   end
 
-  ###############################################
-  # movement methods
-  ###############################################
-
-  def new_movement
-    @product = Product.find(params[:id])
-    @movement = Movement.new
-  end
-
-  def create_movement
-    @product = Product.find(params[:id])
-    @movement = Movement.new(movement_params)
-    @movement.product_id = @product.id
-    if @movement.save
-      redirect_to products_url, notice: 'Se ha creado un Movimiento Correctamente.'
-    else
-      flash[:notice] = 'Ha ocurrido un error al crear el Movimiento.'
-      render :new_movement, status: :unprocessable_entity
-    end
-  end
-
-  ###############################################
-  # Private methods
-  ###############################################
-
   private
 
   def sort_column
-    %w[nombre precio referencia cantidad categoria].include?(params[:sort]) ? params[:sort] : 'nombre'
+    %w[nombre referencia precio fecha_caducidad tipo].include?(params[:sort]) ? params[:sort] : 'nombre'
   end
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
-  def movement_params
-    params.require(:movement).permit(:tipo, :cantidad, :descripcion, :provider_id, :client_id, :fecha)
   end
 
   def set_product
@@ -127,7 +97,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:nombre, :image, :category_id, :provider_id, :precio, :referencia, :cantidad,
+    params.require(:product).permit(:nombre, :image, :category_id, :precio, :referencia,
                                     :tipo, :fecha_caducidad)
   end
 end
