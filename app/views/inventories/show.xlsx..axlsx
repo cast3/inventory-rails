@@ -1,13 +1,19 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: "Detalles del Producto") do |sheet|
-  sheet.add_row(["ID", @product.id])
-  sheet.add_row(["ID", @product.nombre])
-  sheet.add_row(["ID", @product.quantity])
-  sheet.add_row(["ID", @product.cantidadMinima])
-  sheet.add_row(["ID", search_cat_name(@product.category_id)])
-  sheet.add_row([])
-  sheet.add_row ["Tipo", "Cantidad", "Fecha Expiración", "Comentario", "Fecha del Movimiento"]
-  @product.movements.each do |movement|
-    sheet.add_row([movement.movement_type_name, movement.quantity, movement.fecha_expiracion, movement.comment, movement.created_at])
+wb.styles do |s|
+  # Define estilo para el encabezado de la tabla
+  table_header = s.add_style(bg_color: "333333", fg_color: "FFFFFF", b: true)
+
+  wb.add_worksheet(name: "Listado de movimientos#{Date.today.day}") do |sheet|
+    # Define encabezados de la tabla
+    sheet.add_row ["ID", "Nombre", "Referencia", "Precio", "Categoría" , "Fecha caducidad"], style: table_header
+
+    @movements.each do |movement|
+      # Añade datos de cada producto a la tabla
+      sheet.add_row [movement.nombre_tipo_movimiento, movement.cantidad, movement.descripcion, movement.created_at , <% if movement.client_id.present? %>
+                        <%= Client.find(movement.client_id).nombre %>
+                      <% else %>
+                        <%= Provider.find(movement.provider_id).nombre %>
+                      <% end %>]
+    end
   end
 end

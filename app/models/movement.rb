@@ -29,15 +29,16 @@ class Movement < ApplicationRecord
       inventory.update(stock: inventory.stock + cantidad)
     elsif tipo_movimiento == 1
       inventory.update(stock: inventory.stock - cantidad)
-      client = Client.find_or_initialize_by(client_id:)
+      client = Client.find(client_id)
 
       if cantidad >= 50
-        client.update(puntos: client.puntos + 3)
+        client.update(puntaje: client.puntaje + 3)
       elsif cantidad >= 20
-        client.update(puntos: client.puntos + 2)
+        client.update(puntaje: client.puntaje + 2)
       elsif cantidad >= 10
-        client.update(puntos: client.puntos + 1)
+        client.update(puntaje: client.puntaje + 1)
       end
+
     end
   end
 

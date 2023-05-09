@@ -6,7 +6,7 @@ wb.styles do |s|
     sheet.add_row ["Nombre del producto", "Stock", "Cantidad mínima", "Fecha de caducidad"], style: table_header
 
     # Rows
-    @inventories.each do |inventory|
+    @totalInventories.each do |inventory|
       product = search_product_ByID(inventory.product_id)
       fecha_caducidad = if product.fecha_caducidad.nil?
                           "Ninguna"

@@ -4,6 +4,8 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all.order(created_at: :desc)
+    @totalProducts = @products
+
     @products = Product.search_by_name(params[:query]) if params[:query].present?
     @pagy, @products = pagy @products.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
@@ -25,44 +27,24 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-
-    if params[:product][:image].present?
-      image = params[:product][:image].read
-      @product.image = Base64.encode64(image)
-    else
-      default_image_path = Rails.root.join('app', 'assets', 'images', 'default.png')
-      default_image = File.open(default_image_path, 'rb').read
-      @product.image = Base64.encode64(default_image)
-    end
+    set_product_image
 
     respond_to do |format|
       if @product.save
         format.html { redirect_to product_url(@product), notice: 'Producto ha sido creado exitosamente.' }
-        format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    if params[:product][:image].present?
-      image = params[:product][:image].read
-      @product.image = Base64.encode64(image)
-    else
-      default_image_path = Rails.root.join('app', 'assets', 'images', 'default.png')
-      default_image = File.open(default_image_path, 'rb').read
-      @product.image = Base64.encode64(default_image)
-    end
-
+    set_product_image
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to product_url(@product), notice: 'Producto ha sido actualizado exitosamente.' }
-        format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -78,11 +60,21 @@ class ProductsController < ApplicationController
     @product.destroy
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Producto ha sido eliminado exitosamente.' }
-      format.json { head :no_content }
     end
   end
 
   private
+
+  def set_product_image
+    if params[:product][:image].present?
+      image = params[:product][:image].read
+      @product.image = Base64.encode64(image)
+    else
+      default_image_path = Rails.root.join('app', 'assets', 'images', 'default.png')
+      default_image = File.open(default_image_path, 'rb').read
+      @product.image = Base64.encode64(default_image)
+    end
+  end
 
   def sort_column
     %w[nombre referencia precio fecha_caducidad tipo].include?(params[:sort]) ? params[:sort] : 'nombre'

@@ -3,6 +3,7 @@ class InventoriesController < ApplicationController
 
   def index
     @inventories = Inventory.joins(:product).order('products.fecha_caducidad ASC')
+    @totalInventories = @inventories
 
     @inventories = Product.search_by_name(params[:query]) if params[:query].present?
     @pagy, @inventories = pagy @inventories.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
@@ -42,10 +43,8 @@ class InventoriesController < ApplicationController
     respond_to do |format|
       if @inventory.save
         format.html { redirect_to inventory_url(@inventory), notice: 'Producto agregado al inventario exitosamente.' }
-        format.json { render :show, status: :created, location: @inventory }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @inventory.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,10 +53,8 @@ class InventoriesController < ApplicationController
     respond_to do |format|
       if @inventory.update(inventory_params)
         format.html { redirect_to inventory_url(@inventory), notice: 'Inventario de producto actualizado exitosamente.' }
-        format.json { render :show, status: :ok, location: @inventory }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @inventory.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,7 +64,6 @@ class InventoriesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to inventories_url, notice: 'Inventario de producto eliminado exitosamente.' }
-      format.json { head :no_content }
     end
   end
 
@@ -80,6 +76,8 @@ class InventoriesController < ApplicationController
     @inventory = Inventory.find(params[:id])
     @movement = Movement.new(movement_params)
     @movement.inventory_id = @inventory.id
+
+    # TODO validar que la cantidad no sea mayor al stock
     if @movement.save
       redirect_to inventory_path(id: @inventory.id), notice: 'Movimiento creado exitosamente.'
     else

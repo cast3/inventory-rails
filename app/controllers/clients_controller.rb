@@ -29,10 +29,8 @@ class ClientsController < ApplicationController
     respond_to do |format|
       if @client.save
         format.html { redirect_to client_url(@client), notice: 'Cliente ha sido creado exitosamente.' }
-        format.json { render :show, status: :created, location: @client }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -41,10 +39,8 @@ class ClientsController < ApplicationController
     respond_to do |format|
       if @client.update(client_params)
         format.html { redirect_to client_url(@client), notice: 'Cliente ha sido actualizado exitosamente.' }
-        format.json { render :show, status: :ok, location: @client }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,7 +50,6 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to clients_url, notice: 'Cliente ha sido eliminado exitosamente..' }
-      format.json { head :no_content }
     end
   end
 

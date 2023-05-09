@@ -3,11 +3,11 @@ wb.styles do |s|
   # Define estilo para el encabezado de la tabla
   table_header = s.add_style(bg_color: "333333", fg_color: "FFFFFF", b: true)
 
-  wb.add_worksheet(name: "Listado de proveedores#{Date.today}") do |sheet|
+  wb.add_worksheet(name: "Listado de proveedores#{Date.today.day}") do |sheet|
     # Define encabezados de la tabla
     sheet.add_row ["ID", "Nombre", "Telefono", "Dirección", "Correo" , "Fecha creación"], style: table_header
 
-    @providers.each do |provider|
+    @totalProviders.each do |provider|
       # Añade datos de cada provider a la tabla
       sheet.add_row [provider.id, provider.nombre, provider.telefono, provider.direccion, provider.email, provider.created_at.strftime("%d/%m/%Y %H:%M")]
     end

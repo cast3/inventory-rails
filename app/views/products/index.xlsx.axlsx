@@ -7,7 +7,7 @@ wb.styles do |s|
     # Define encabezados de la tabla
     sheet.add_row ["ID", "Nombre", "Referencia", "Precio", "Categoría" , "Fecha caducidad"], style: table_header
 
-    @products.each do |product|
+    @totalProducts.each do |product|
       # Añade datos de cada producto a la tabla
       sheet.add_row [product.id, product.nombre, product.referencia, product.precio, search_cat_name(product.category_id), product.fecha_caducidad]
     end
