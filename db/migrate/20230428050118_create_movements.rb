@@ -5,7 +5,7 @@ class CreateMovements < ActiveRecord::Migration[7.0]
       t.references :client, null: true,  default: nil, foreign_key: true
       t.references :provider, null: true, default: nil, foreign_key: true
       t.integer :tipo_movimiento
-      t.integer :descripcion
+      t.text :descripcion
       t.integer :cantidad
 
       t.timestamps

@@ -25,6 +25,7 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(client_params)
+    @client.puntaje = 0
 
     respond_to do |format|
       if @client.save
@@ -60,7 +61,7 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:nombre, :cedula, :telefono, :puntaje)
+    params.require(:client).permit(:nombre, :cedula, :telefono)
   end
 
   def sort_column

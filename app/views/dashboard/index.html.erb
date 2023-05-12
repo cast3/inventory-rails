@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 my-5">
-      <div class="p-6 md:col-span-2 lg:col-span-1">
+      <div class="sm:p-5 md:col-span-2 lg:col-span-1">
         <h1 class="text-primary font-semibold text-md mb-2">Productos que están por caducar:</h1>
         <% @products.select { |product| product.fecha_caducidad && product.fecha_caducidad <= Date.today + 1.month }
         .sort_by(&:fecha_caducidad)
@@ -38,14 +38,14 @@
         .each do |product| %>
             <% if product.fecha_caducidad <= Date.today %>
           <ul>
-              <li class="flex justify-between items-center">
+              <li class="flex justify-between items-center p-1">
                 <span class="text-red-500">- <%= product.nombre %></span>
-                <%= tag.span(distance_of_time_in_words(Date.today, product.fecha_caducidad, { add_suffix: true }), class: 'text-red-500') %>
+                <%= tag.span(distance_of_time_in_words(Date.today, product.fecha_caducidad, { add_suffix: true }), class: 'text-red-500 whitespace-nowrap') %>
               </li>
             <% else %>
-              <li class="flex justify-between items-center">
-                <span class="text-black">- <%= product.nombre %></span>
-                <%= tag.span(distance_of_time_in_words(Date.today, product.fecha_caducidad, { add_suffix: true }), class: 'text-red-500') %>
+              <li class="flex justify-between items-center p-1">
+                <span class="text-black ">- <%= product.nombre %></span>
+                <%= tag.span(distance_of_time_in_words(Date.today, product.fecha_caducidad, { add_suffix: true }), class: 'text-red-500 whitespace-nowrap') %>
               </li>
           </ul>
             <% end %>

@@ -1,13 +1,4 @@
 class Inventory < ApplicationRecord
-  include PgSearch::Model
-
-  pg_search_scope :search_by_name, against: [:stock], using: {
-    tsearch: {
-      dictionary: "spanish",
-      any_word: true,
-      prefix: true,
-    }
-  }
 
   belongs_to :product
   has_many :movements, dependent: :destroy

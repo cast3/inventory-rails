@@ -1,17 +1,6 @@
 class Product < ApplicationRecord
-  include PgSearch::Model
-
-  pg_search_scope :search_by_name, against: [:nombre], using: {
-    tsearch: {
-      dictionary: 'spanish',
-      any_word: true,
-      prefix: true
-    }
-  }
 
   TYPES = %w[Perecedero Duradero].freeze
-  has_many :movements, dependent: :destroy
-
   before_save :upcase_referencia
   has_one :inventory, dependent: :destroy
   has_one :provider, through: :inventory

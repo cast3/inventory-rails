@@ -18,12 +18,10 @@ class ProvidersController < ApplicationController
 
   def show; end
 
-  # GET /providers/new
   def new
     @provider = Provider.new
   end
 
-  # GET /providers/1/edit
   def edit; end
 
   def create
@@ -66,12 +64,10 @@ class ProvidersController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_provider
     @provider = Provider.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def provider_params
     params.require(:provider).permit(:nombre, :direccion, :telefono, :email)
   end

@@ -17,13 +17,9 @@ class ProductsController < ApplicationController
     end
   end
 
-  def show; end
-
   def new
     @product = Product.new
   end
-
-  def edit; end
 
   def create
     @product = Product.new(product_params)
@@ -54,7 +50,8 @@ class ProductsController < ApplicationController
 
     if inventoryItem.present?
       hasCantidadDisponible = inventoryItem.first.stock
-      throw 'No se puede eliminar el producto porque tiene inventario' if hasCantidadDisponible > 0
+      flash[:alert] = 'No se puede eliminar el producto porque tiene inventario' if hasCantidadDisponible > 0
+      redirect_to products_url and return if hasCantidadDisponible > 0
     end
 
     @product.destroy

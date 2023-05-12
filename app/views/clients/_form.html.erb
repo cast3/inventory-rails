@@ -10,12 +10,22 @@
     </div>
   <% end %>
   <div class="my-5">
+    <%= form.label :cedula %>
+    <%= form.number_field :cedula, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder:'Cedula de ciudadania o NIT', maxlength:'10'  %>
+  </div>
+  <div class="my-5">
     <%= form.label :nombre %>
     <%= form.text_field :nombre, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder:'Nombre completo' %>
   </div>
   <div class="my-5">
-    <%= form.label :email %>
+    <%= form.label 'Correo' %>
     <%= form.text_field :email, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder:'Correo electronico' %>
+  </div>
+  <div class="my-5">
+    <%= form.label "Teléfono" %>
+    <div class="flex flex-row gap-4">
+      <%= form.telephone_field :telefono, class: "shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "Telefono", maxlength:'10' %>
+    </div>
   </div>
   <% if action_name == 'edit' %>
     <div class="my-5">
@@ -24,10 +34,13 @@
     </div>
   <% end %>
   <div class="my-5">
-    <%= form.label :puntaje %>
-    <%= form.hidden_field :attribute :puntaje, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder:'Puntaje' %>
+    <%= form.hidden_field :puntaje, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder:'Puntaje' %>
   </div>
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <div class="flex justify-center flex-row">
+    <%= form.submit "#{action_name == "new" ? "Añadir" : "Actualizar"} cliente", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>
+    <%= link_to "Volver al listado", clients_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+    <% if action_name == "edit" %>
+      <%= link_to "Detalles", client, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+    <% end %>
   </div>
 <% end %>
