@@ -17,16 +17,13 @@ class ProductsController < ApplicationController
     end
   end
 
-  def show; end
-
   def new
     @product = Product.new
   end
 
-  def edit; end
-
   def create
     @product = Product.new(product_params)
+
     set_product_image
 
     respond_to do |format|
@@ -39,9 +36,17 @@ class ProductsController < ApplicationController
   end
 
   def update
-    set_product_image
     respond_to do |format|
-      if @product.update(product_params)
+      if product_params[:image].present?
+        image = product_params[:image].read
+        image = Base64.encode64(image)
+        @product.image = image
+        @product.update(product_params.except(:image))
+      else
+        @product.update(product_params)
+      end
+
+      if @product.save
         format.html { redirect_to product_url(@product), notice: 'Producto ha sido actualizado exitosamente.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +59,8 @@ class ProductsController < ApplicationController
 
     if inventoryItem.present?
       hasCantidadDisponible = inventoryItem.first.stock
-      throw 'No se puede eliminar el producto porque tiene inventario' if hasCantidadDisponible > 0
+      flash[:alert] = 'No se puede eliminar el producto porque tiene inventario' if hasCantidadDisponible > 0
+      redirect_to products_url and return if hasCantidadDisponible > 0
     end
 
     @product.destroy

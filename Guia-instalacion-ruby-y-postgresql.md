@@ -158,10 +158,3 @@ cat /etc/postgresql/15/main/postgresql.conf | grep port
 ```bash
 cat /etc/postgresql/15/main/pg_hba.conf | grep local
 ```
-
-## Clonamos el repositorio de la aplicación
-
-```bash
-git clone
-```
-

@@ -30,7 +30,7 @@
               <td class="px-4 py-[5px]"><%= @product.fecha_caducidad > Date.today ? (distance_of_time_in_words(Date.today, @product.fecha_caducidad) + " restantes") : (distance_of_time_in_words(Date.today, @product.fecha_caducidad) + " expirados") %></td>
             <% else %>
               <td class="px-4 py-[5px]">
-                No perecedero
+                No aplica
               </td>
             <% end %>
           </tr>

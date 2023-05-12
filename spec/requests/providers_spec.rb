@@ -13,7 +13,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/providers", type: :request do
-  
+
   # This should return the minimal set of attributes required to create a valid
   # Provider. As you add validations to Provider, be sure to
   # adjust the attributes here as well.
@@ -77,12 +77,11 @@ RSpec.describe "/providers", type: :request do
         }.to change(Provider, :count).by(0)
       end
 
-    
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post providers_url, params: { provider: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
+
     end
   end
 
@@ -108,13 +107,13 @@ RSpec.describe "/providers", type: :request do
     end
 
     context "with invalid parameters" do
-    
+
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         provider = Provider.create! valid_attributes
         patch provider_url(provider), params: { provider: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
+
     end
   end
 

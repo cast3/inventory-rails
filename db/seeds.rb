@@ -1,5 +1,5 @@
-categories = ['Despensa', 'Cuidado Personal', 'Belleza', 'Lácteos,Huevos Y Refrigerados', 'Vinos YLicores', 'Pasabocas',
-              'Frutas YVerduras', 'Aseo DeHogar', 'Dulces YPostres', 'Panadería YPastelería', 'Limpieza DeCocina', 'Bebidas', 'Mascotas', 'Cuidado DeRopa Y Calzado', 'Platos Preparados', 'Carne Y Pollo', 'Cuidado DelBebé', 'Pescados YMariscos', 'Charcutería', 'Bolsas', 'Mundo Parrilla', 'Anchetas']
+categories = ['Despensa', 'Cuidado personal', 'Belleza', 'Lácteos, Huevos y refrigerados', 'Vinos y licores', 'Pasabocas',
+              'Fruta y verduras', 'Aseo de hogar', 'Dulces y postres', 'Panadería YPastelería', 'Limpieza de cocina', 'Bebidas', 'Mascotas', 'Cuidado de ropa y calzado', 'Platos preparados', 'Carne y pollo', 'Cuidado del Bebé', 'Pescados y mariscos', 'Charcutería', 'Bolsas', 'Mundo parrilla', 'Anchetas']
 
 default_image_path = Rails.root.join('app', 'assets', 'images', 'default.png')
 default_image = File.open(default_image_path, 'rb').read
@@ -40,12 +40,5 @@ end
   clientes.puntaje = 0
   clientes.save
 end
-
-user_Admin = User.new
-user_Admin.email = 'admin@test.com'
-user_Admin.password = 'admin123'
-user_Admin.password_confirmation = 'admin123'
-user_Admin.role = 'admin'
-user_Admin.save
 
 puts 'Seed finalizado'

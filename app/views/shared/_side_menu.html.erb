@@ -2,7 +2,7 @@
 <% active_link_classes = 'border-r-4 border-primary bg-violet-50' %>
 <% icon_link = "text-primary" %>
 
-<div class="flex h-screen flex-col justify-between border-r bg-white shadow-2xl border-gray-200">
+<div class="flex h-screen flex-col justify-between border-r bg-white shadow-2xl border-gray-200 z-50">
   <div class="py-8">
     <button class="sm:hidden absolute top-0 right-0 navbar-burger flex items-center px-3 py-3 border rounded-full text-white border-white hover:text-gray-100 hover:bg-gray-200" data-action="click->header#toggleMobileNav">
       <%= image_tag("svgs/CloseBurger.svg", alt: "Menu Hamburguesa", width: "12", height: "12", class:'select-none') %>

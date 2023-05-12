@@ -1,13 +1,38 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    
-
-    <%= render @client %>
-
-    <%= link_to 'Edit this client', edit_client_path(@client), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this client', client_path(@client), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+<div class="flex justify-center items-center h-screen">
+  <div class="w-full sm:w-[80%] md:w-[60%] lg:w-[50%] bg-white rounded-lg">
+    <div class="grid grid-flow-col grid-cols-4">
+      <div class="col-span-4 p-4">
+        <h2 class="text-lg font-bold text-primary whitespace-nowrap text-left pl-4">Detalles del cliente</h2>
+        <table class="table-auto w-full my-5">
+          <tbody class="font-regular text-sm">
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Cedula:</td>
+            <td class="px-4 py-[5px]"><%= @client.cedula %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Nombre:</td>
+            <td class="px-4 py-[5px]"><%= @client.nombre %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Telefono:</td>
+            <td class="px-4 py-[5px]"><%= @client.telefono %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Puntaje:</td>
+            <td class="px-4 py-[5px]"><%= @client.puntaje %></td>
+          </tr>
+          <tr>
+            <td class="px-4 py-[5px] font-semibold">Fecha creación:</td>
+            <td class="px-4 py-[5px]"><%= @client.created_at.strftime("%d/%m/%Y %H:%M:%S") %></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="flex justify-center items-center gap-x-4 w-full flex-wrap">
+          <%= link_to 'Editar', edit_client_path(@client), class: "rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 whitespace-nowrap font-medium text-sm" %>
+          <%= button_to 'Eliminar', client_path(@client), method: :delete, class: "rounded-lg rounded-lg py-3 px-5 bg-red-500 text-white hover:bg-primary-hover-700 whitespace-nowrap font-medium text-sm" %>
+          <%= link_to 'Volver al listado', clients_path, class: "rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 whitespace-nowrap font-medium" %>
+        </div>
+      </div>
     </div>
-    <%= link_to 'Back to clients', clients_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
 </div>
