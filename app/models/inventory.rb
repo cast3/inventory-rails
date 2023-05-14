@@ -1,4 +1,5 @@
 class Inventory < ApplicationRecord
+
   belongs_to :product
   has_many :movements, dependent: :destroy
 

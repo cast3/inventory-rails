@@ -1,6 +1,7 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  before_action :ensure_has_enough_products, only: [:create_movement]
 
   def index
     @inventories = Inventory.joins(:product).order('products.fecha_caducidad ASC')
@@ -30,7 +31,7 @@ class InventoriesController < ApplicationController
           response.headers['Content-Disposition'] =
             "attachment; filename=\"Listado de movimientos - #{@inventory.id}.xlsx\""
         else
-          flash[:alert] = 'No hay movimientos para este producto.'
+          flash[:notice] = 'No hay movimientos para este producto.'
           redirect_to inventory_path(id: @inventory.id)
         end
       end
@@ -85,12 +86,11 @@ class InventoriesController < ApplicationController
     @movement = Movement.new(movement_params)
     @movement.inventory_id = @inventory.id
 
-    ensure_has_enough_products
-
+    # TODO: validar que la cantidad no sea mayor al stock
     if @movement.save
       redirect_to inventory_path(id: @inventory.id), notice: 'Movimiento creado exitosamente.'
     else
-      flash[:alert] = 'Ha ocurrido un error al crear el Movimiento.'
+      flash[:notice] = 'Ha ocurrido un error al crear el Movimiento.'
       render :new_movement, status: :unprocessable_entity
     end
   end
@@ -105,7 +105,7 @@ class InventoriesController < ApplicationController
     return unless @movement.tipo_movimiento == 'Salida'
     return unless @movement.cantidad > @inventory.stock
 
-    flash[:alert] = 'No hay suficientes productos en el inventario.'
+    flash[:notice] = 'No hay suficientes productos en el inventario.'
     render :new_movement, status: :unprocessable_entity
   end
 
