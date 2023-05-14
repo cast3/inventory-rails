@@ -1,9 +1,8 @@
 class Product < ApplicationRecord
-
   TYPES = %w[Perecedero Duradero].freeze
   before_save :upcase_referencia
   has_one :inventory, dependent: :destroy
-  belongs_to :category
+  has_many :categories
 
   validates :nombre, presence: true, length: { maximum: 50 }
   validates :referencia, presence: true, length: { maximum: 15 }
