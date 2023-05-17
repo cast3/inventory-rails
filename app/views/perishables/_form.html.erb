@@ -1,9 +1,9 @@
-<%= form_with(model: product, class: "contents", html: {multipart: true}) do |form| %>
-  <% if product.errors.any? %>
+<%= form_with(model: {perishable,:provider_id}, class: "contents", html: {multipart: true}) do |form| %>
+  <% if perishable.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(client.errors.count, "error") %> no permitieron que este producto fuera guardado:</h2>
       <ul>
-        <% product.errors.each do |error| %>
+        <% perishable.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -26,13 +26,13 @@
     </div>
     <div class="col-span-1">
       <%= form.label :precio, "Precio", class: "block mt-1 mb-1" %>
-      <%= form.number_field :precio, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 1, placeholder: 'Precio del producto' %>
+      <%= form.number_field :precio, precision: 8, scale: 2 , class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 1, placeholder: 'Precio del producto' %>
     </div>
   </div>
   <div class="grid grid-flow-row grid-cols-2 items-center gap-x-2">
     <div class="col-span-1">
-      <%= form.label :tipo, "Tipo", class: "block mt-1 mb-1"  %>
-      <%= form.select :tipo, options_for_select(Product::TYPES.sort), { prompt: 'Tipo de producto' }, { class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full', data:{ controller:"tipo-producto", action: 'tipo-producto#click'} } %>
+      <%= form.label "Fecha de caducidad", class: "block mt-3 mb-1" %>
+      <%= form.date_field :fecha_caducidad, as: :date, discard_day: true, discard_month: false, order: [:year, :month], class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full', min: Date.today.iso8601 %>
     </div>
     <div class="col-span-1">
       <%= form.label "Foto del Producto", class: "block mt-3" %>
@@ -42,16 +42,13 @@
       <span class="text-xs">Opcional</span>
     </div>
   </div>
-  <div class="my-1" id="fecha_de_caducidad">
-    <%= form.label "Fecha de caducidad", class: "block mt-3 mb-1" %>
-    <%= form.date_field :fecha_caducidad, as: :date, discard_day: true, discard_month: false, order: [:year, :month], class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full', min: Date.today.iso8601 %>
-  </div>
+
   <div class="my-5">
     <div class="flex justify-center flex-row">
       <%= form.submit "#{action_name == "new" ? "Crear" : "Actualizar"} producto", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>
-      <%= link_to "Volver a productos", products_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+      <%= link_to "Volver a productos", perishables_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
       <% if action_name == "edit" %>
-        <%= link_to "Detalles", @product, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
+        <%= link_to "Detalles", @perishable, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
       <% end %>
     </div>
   </div>

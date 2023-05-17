@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   end
 
   resources :movements
-  resources :products
+  resources :perishables
+  # resources :products, path: :perishables
   resources :clients
   resources :providers
   resources :categories

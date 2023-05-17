@@ -10,18 +10,18 @@
       <div class="flex justify-center my-4">
         <h2 class="text-lg font-bold text-primary whitespace-nowrap text-left pl-4">Detalles del producto</h2>
           <div class = "flex justify-center relative w-full">
-            <%= image_tag "data:image/png;base64,#{@product.image}", class:'absolute rounded-full right-0 -top-5 w-[70px] h-[70px] object-contain', alt:'image-producto' %>
+            <%= image_tag "data:image/png;base64,#{@perishable.image}", class:'absolute rounded-full right-0 -top-5 w-[70px] h-[70px] object-contain', alt:'image-producto' %>
           </div>
       </div>
       <table class="table-auto w-full">
         <tbody class="font-regular text-sm">
         <tr>
           <td class="px-4 py-[5px] font-semibold">Nombre:</td>
-          <td class="px-4 py-[5px]"><%= @product.nombre %></td>
+          <td class="px-4 py-[5px]"><%= @perishable.nombre %></td>
         </tr>
         <tr>
           <td class="px-4 py-[5px] font-semibold">Referencia:</td>
-          <td class="px-4 py-[5px]"><%= @product.referencia %></td>
+          <td class="px-4 py-[5px]"><%= @perishable.referencia %></td>
         </tr>
         <tr>
           <td class="px-4 py-[5px] font-semibold">Fecha expiración:</td>
@@ -49,7 +49,7 @@
         </tr>
         <tr>
           <td class="px-4 py-[5px] font-semibold">Categoría:</td>
-          <td class="px-4 py-[5px]"><%= search_cat_name(@product.category_id) %></td>
+          <td class="px-4 py-[5px]"><%= search_cat_name(@perishable.category_id) %></td>
         </tr>
         <tr>
           <td class="px-4 py-[5px] font-semibold">Proveedor:</td>
@@ -80,7 +80,7 @@
           <%= image_tag "svgs/IconPlus.svg", class: "text-primary stroke-primary h-6 mr-3" %>
           Nuevo movimiento
         <% end %>
-        <%= link_to products_path( id: @Products, format: :xlsx), class: "hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-5 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+        <%= link_to inventories_path( id: @perishables, format: :xlsx), class: "hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-5 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
           Exportar
           <%= image_tag "svgs/IconExcel.svg", class: "text-primary stroke-primary h-6 ml-3" %>
         <% end %>

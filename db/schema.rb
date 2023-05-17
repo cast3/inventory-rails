@@ -74,7 +74,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_050118) do
     t.text "referencia"
     t.float "precio"
     t.text "image"
-    t.string "tipo"
     t.date "fecha_caducidad"
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false

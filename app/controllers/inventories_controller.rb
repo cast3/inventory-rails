@@ -6,8 +6,6 @@ class InventoriesController < ApplicationController
   def index
     @inventories = Inventory.joins(:product).order('products.fecha_caducidad ASC')
     @totalInventories = @inventories
-
-    @inventories = Product.search_by_name(params[:query]) if params[:query].present?
     @pagy, @inventories = pagy @inventories.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
     respond_to do |format|
@@ -22,7 +20,7 @@ class InventoriesController < ApplicationController
     @inventory = Inventory.find(params[:id])
     @movements = Movement.where(inventory_id: @inventory.id)
     @providers = Provider.joins(:movements).where(movements: { inventory_id: @inventory.id }).all.uniq
-    @product = Product.find(@inventory.product_id)
+    @perishable = Product.find(@inventory.product_id)
 
     respond_to do |format|
       format.html
@@ -46,6 +44,14 @@ class InventoriesController < ApplicationController
 
   def create
     @inventory = Inventory.new(inventory_params)
+
+    @new_movement = Movement.new
+    @new_movement.tipo_movimiento = 'Entrada'
+    @new_movement.cantidad = @inventory.stock
+    @new_movement.descripcion = 'Inventario inicial'
+    @new_movement.inventory_id = @inventory.id
+    @new_movement.provider_id = params[:provider_id]
+    @new_movement.save
 
     respond_to do |format|
       if @inventory.save
@@ -86,7 +92,6 @@ class InventoriesController < ApplicationController
     @movement = Movement.new(movement_params)
     @movement.inventory_id = @inventory.id
 
-    # TODO: validar que la cantidad no sea mayor al stock
     if @movement.save
       redirect_to inventory_path(id: @inventory.id), notice: 'Movimiento creado exitosamente.'
     else

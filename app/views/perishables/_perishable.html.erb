@@ -1,0 +1,30 @@
+<tr id="<%= dom_id perishable %>" class="border-b">
+  <th scope="row" class="flex items-center whitespace-nowrap px-4 py-3 font-medium text-gray-900">
+    <%= image_tag "data:image/png;base64,#{perishable.image}", class:'mr-3 h-8 w-auto object-contain', alt:'image-producto' %>
+    <%= perishable.nombre %>
+  </th>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= search_cat_name(perishable.category_id) %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <%= perishable.referencia %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    $ <%= perishable.precio %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <% if perishable.fecha_caducidad.present? %>
+      <%= perishable.fecha_caducidad.strftime("%d/%m/%Y") %>
+    <% else %>
+      No aplica
+    <% end %>
+  </td>
+    <td class="px-4 py-3 whitespace-nowrap">
+    <%= perishable.tipo %>
+  </td>
+  <td class="px-4 py-3 whitespace-nowrap">
+    <div class="flex flex-row flex-nowrap justify-center gap-x-2">
+      <%= render partial: 'shared/menu_dropdown', locals: {  ver_method: perishable, edit_method: edit_perishable_path(perishable) } %>
+    </div>
+  </td>
+</tr>

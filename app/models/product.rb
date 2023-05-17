@@ -1,22 +1,23 @@
 class Product < ApplicationRecord
-  TYPES = %w[Perecedero Duradero].freeze
-  before_save :upcase_referencia
+  before_save :upcase_referencia, :capitalize
   has_one :inventory, dependent: :destroy
-  has_many :categories
+  belongs_to :category
 
   validates :nombre, presence: true, length: { maximum: 50 }
   validates :referencia, presence: true, length: { maximum: 15 }
   validates :precio, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :tipo, presence: true, inclusion: { in: TYPES }
-  validates :fecha_caducidad, if: :perecedero?, presence: true
+
+  def tipo
+    'Producto'
+  end
 
   private
 
-  def perecedero?
-    tipo == 'Perecedero'
-  end
-
   def upcase_referencia
     self.referencia = referencia.upcase
+  end
+
+  def capitalize
+    self.nombre = nombre.lowercase.capitalize
   end
 end

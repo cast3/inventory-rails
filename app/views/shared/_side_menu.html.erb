@@ -25,7 +25,7 @@
         <%= image_tag "svgs/IconDash.svg", class: "text-primary stroke-primary h-6 mr-3" %>
         <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Dashboard </span>
       <% end %>
-      <%= link_to products_path, class: "#{nav_link_classes} #{params[:controller] == 'products' ? active_link_classes : ''}" do %>
+      <%= link_to perishables_path, class: "#{nav_link_classes} #{params[:controller] == 'perishables' ? active_link_classes : ''}" do %>
         <%= image_tag "svgs/IconCaja.svg", class: "h-6 mr-3" %>
         <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Productos </span>
       <% end %>

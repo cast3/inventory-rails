@@ -1,8 +1,9 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
+  before_action :user_is_admin?
 
   def index
-    @products = Product.all
+    @perishables = Perishable.all
     @categories = Category.all
     @movements = Movement.all
     @clientes = Client.all
@@ -10,7 +11,15 @@ class DashboardController < ApplicationController
 
     @totalClientes = @clientes.count
     @totalCategorias = @categories.count
-    @totalProductos = @products.count
+    @totalProductos = @perishables.count
     @totalProveedores = @proveedores.count
+  end
+
+  private
+
+  def user_is_admin?
+    if current_user.role != 1
+      redirect_to inventories_path
+    end
   end
 end

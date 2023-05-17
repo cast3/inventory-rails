@@ -2,17 +2,17 @@
   <div class="mx-auto max-w-screen-xl px-4">
     <h1 class="font-bold text-4xl pt-5 sm:pt-0">Productos</h1>
     <div class="relative overflow-hidden sm:rounded-lg py-3 md:pb-3">
-      <div class="flex flex-col items-center justify-end space-y-3 p-4 px-px md:flex-row md:space-x-4 md:space-y-0">
+      <div class="flex flex-col items-center justify-end space-y-3 px-4 md:flex-row md:space-x-4 md:space-y-0">
         <div class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0 mb-3">
           <div class="flex w-full items-center space-x-3 md:w-auto">
             <%# ----------------- Nuevo producto ------------------- %>
-            <%= link_to new_product_path, class: "hover:text-primary-700 flex w-full w-[15dvw] items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+            <%= link_to new_perishable_path, class: "hover:text-primary-700 flex w-full w-[15dvw] items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
               <%= image_tag "svgs/IconPlus.svg", class: "text-primary stroke-primary h-6 mr-3" %>
               Nuevo producto
             <% end %>
             <%# -----------------		--		 ------------------- %>
             <%# ----------------- Exportar a excel ------------------- %>
-            <%= link_to products_path( id: @Products, format: :xlsx), class: "hover:text-primary-700 flex w-full w-[15dvw] items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
+            <%= link_to perishables_path( id: @Products, format: :xlsx), class: "hover:text-primary-700 flex w-full w-[15dvw] items-center justify-center rounded-lg border border-gray-200 bg-white px-4 md:px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:border hover:border-black focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 whitespace-nowrap shadow-lg" do %>
               Exportar
               <%= image_tag "svgs/IconExcel.svg", class: "text-primary stroke-primary h-6 ml-3" %>
             <% end %>
@@ -49,7 +49,7 @@
               </tr>
             </thead>
             <tbody class="overflow-auto">
-              <%= render @products %>
+              <%= render @perishables %>
             </tbody>
           </table>
         </div>

@@ -5,7 +5,7 @@ class ProvidersController < ApplicationController
   def index
     @providers = Provider.all.order(created_at: :desc)
     @totalProviders = @providers
-    @products = @providers.search(params[:query]) if params[:query].present?
+    @perishables = @providers.search(params[:query]) if params[:query].present?
     @pagy, @providers = pagy @providers.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
     respond_to do |format|

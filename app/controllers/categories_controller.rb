@@ -44,8 +44,8 @@ class CategoriesController < ApplicationController
   private
 
   def ensure_no_products
-    @products = Product.where(category_id: @category.id)
-    return unless @products.any?
+    @perishables = Product.where(category_id: @category.id)
+    return unless @perishables.any?
 
     flash[:alert] = 'No se puede eliminar la categoría porque tiene productos asociados.'
     redirect_to categories_path

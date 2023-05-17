@@ -1,4 +1,4 @@
 class Category < ApplicationRecord
-  belongs_to :product
+  has_many :products
   validates :nombre, presence: true
 end
