@@ -1,6 +1,7 @@
 class ProvidersController < ApplicationController
   before_action :set_provider, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  before_action :user_is_admin?
 
   def index
     @providers = Provider.all.order(created_at: :desc)
@@ -70,5 +71,11 @@ class ProvidersController < ApplicationController
 
   def provider_params
     params.require(:provider).permit(:nombre, :direccion, :telefono, :email)
+  end
+
+  def user_is_admin?
+    if current_user.role != 'admin'
+      redirect_to inventories_path
+    end
   end
 end

@@ -18,7 +18,7 @@ class DashboardController < ApplicationController
   private
 
   def user_is_admin?
-    if current_user.role != 1
+    if current_user.role != 'admin'
       redirect_to inventories_path
     end
   end

@@ -15,15 +15,17 @@
       </p>
     </div>
     <nav aria-label="Main" class="mt-[4rem]">
-      <% if current_user.role === 'admin' %>
+      <% if current_user.role == 'admin' %>
         <%= link_to admin_dashboard_index_path, class: "#{nav_link_classes} #{params[:controller] == 'admin/dashboard' ? active_link_classes : ''}" do %>
           <%= image_tag "svgs/IconAdmin.svg", class: "h-6 mr-3" %>
           <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Admin </span>
         <% end %>
       <% end %>
-      <%= link_to dashboard_index_path, class: "#{nav_link_classes} #{params[:controller] == 'dashboard' ? active_link_classes : ''}" do %>
-        <%= image_tag "svgs/IconDash.svg", class: "text-primary stroke-primary h-6 mr-3" %>
-        <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Dashboard </span>
+      <% if current_user.role == 'admin' %>
+        <%= link_to dashboard_index_path, class: "#{nav_link_classes} #{params[:controller] == 'dashboard' ? active_link_classes : ''}" do %>
+          <%= image_tag "svgs/IconDash.svg", class: "text-primary stroke-primary h-6 mr-3" %>
+          <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Dashboard </span>
+        <% end %>
       <% end %>
       <%= link_to perishables_path, class: "#{nav_link_classes} #{params[:controller] == 'perishables' ? active_link_classes : ''}" do %>
         <%= image_tag "svgs/IconCaja.svg", class: "h-6 mr-3" %>
@@ -33,17 +35,23 @@
         <%= image_tag "svgs/IconInventory.svg", class: "h-6 mr-3" %>
         <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Inventario </span>
       <% end %>
-      <%= link_to categories_path, class: "#{nav_link_classes} #{params[:controller] == 'categories' ? active_link_classes : ''}" do %>
-        <%= image_tag "svgs/IconCat.svg", class: "h-6 mr-3" %>
-        <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Categorías </span>
+      <% if current_user.role == 'admin' %>
+        <%= link_to categories_path, class: "#{nav_link_classes} #{params[:controller] == 'categories' ? active_link_classes : ''}" do %>
+          <%= image_tag "svgs/IconCat.svg", class: "h-6 mr-3" %>
+          <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Categorías </span>
+        <% end %>
       <% end %>
-      <%= link_to providers_path, class: "#{nav_link_classes} #{params[:controller] == 'providers' ? active_link_classes : ''}" do %>
-        <i class="fa-solid fa-people-carry-box h-6 mr-3 text-black"></i>
-        <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Proveedores </span>
+      <% if current_user.role == 'admin' %>
+        <%= link_to providers_path, class: "#{nav_link_classes} #{params[:controller] == 'providers' ? active_link_classes : ''}" do %>
+          <i class="fa-solid fa-people-carry-box h-6 mr-3 text-black"></i>
+          <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Proveedores </span>
+        <% end %>
       <% end %>
-      <%= link_to clients_path, class: "#{nav_link_classes} #{params[:controller] == 'clients' ? active_link_classes : ''}" do %>
-        <%= image_tag "svgs/IconProv.svg", class: "h-6 mr-3" %>
-        <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Clientes </span>
+      <% if current_user.role == 'admin' %>
+        <%= link_to clients_path, class: "#{nav_link_classes} #{params[:controller] == 'clients' ? active_link_classes : ''}" do %>
+          <%= image_tag "svgs/IconProv.svg", class: "h-6 mr-3" %>
+          <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Clientes </span>
+        <% end %>
       <% end %>
     </nav>
     <details class="group [&_summary::-webkit-details-marker]:hidden">

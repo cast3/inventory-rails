@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  before_action :user_is_admin?
 
   def index
     @clients = Client.all.order('created_at DESC')
@@ -70,5 +71,11 @@ class ClientsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  def user_is_admin?
+    if current_user.role != 'admin'
+      redirect_to inventories_path
+    end
   end
 end

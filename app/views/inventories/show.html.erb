@@ -52,11 +52,12 @@
           <td class="px-4 py-[5px]"><%= search_cat_name(@perishable.category_id) %></td>
         </tr>
         <tr>
-          <td class="px-4 py-[5px] font-semibold">Proveedor:</td>
-          <td class="px-4 py-[5px]">
-          <% @providers.each do |provider| %>
-              <%= provider.nombre %>
-          <% end %></td>
+          <td class="px-4 py-[5px] font-semibold text-center" colspan="2">Proveedores:</td>
+        </tr>
+        <tr>
+          <td class="px-4 py-[5px]" colspan="2">
+            <%= select_tag "providers", options_from_collection_for_select(@providers, "id", "nombre"), class:'text-xs overflow-x-auto mx-auto flex justify-center w-full'%>
+          </td>
         </tr>
         </tbody>
       </table>
