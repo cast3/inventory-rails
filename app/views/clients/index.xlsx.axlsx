@@ -9,7 +9,7 @@ wb.styles do |s|
 
     @clients.each do |client|
       # Añade datos de cada cliento a la tabla
-      sheet.add_row [client.id, client.nombre, client.telefono, client.puntaje, client.created_at.strftime("%d/%m/%Y %H:%M")]
+      sheet.add_row [client.id, client.cedula, client.nombre, client.telefono, client.puntaje, client.created_at.strftime("%d/%m/%Y %H:%M")]
     end
   end
 end
