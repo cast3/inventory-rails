@@ -4,4 +4,5 @@ class Client < ApplicationRecord
 
   validates :nombre, presence: true
   validates :telefono, presence: true, length: { maximum: 10 }
+  validates :cedula, presence: true, uniqueness: true, length: { maximum: 10 }
 end

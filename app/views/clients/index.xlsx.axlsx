@@ -1,7 +1,7 @@
 wb = xlsx_package.workbook
 wb.styles do |s|
   # Define estilo para el encabezado de la tabla
-  table_header = s.add_style(bg_color: "333333", fg_color: "FFFFFF", b: true)
+  table_header = s.add_style(bg_color: "4f46e5", fg_color: "FFFFFF", b: true)
 
   wb.add_worksheet(name: "Listado de clientes#{Date.today}") do |sheet|
     # Define encabezados de la tabla

@@ -8,10 +8,11 @@ class InventoriesController < ApplicationController
     @totalInventories = @inventories
     @pagy, @inventories = pagy @inventories.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
+    nombreExcel='Listado de inventario '+ Date.today.strftime('%d-%m-%Y')+'.xlsx'
     respond_to do |format|
       format.html
       format.xlsx do
-        render xlsx: 'index', filename: 'Listado de inventario.xlsx'
+        render xlsx: 'index', filename: nombreExcel
       end
     end
   end
@@ -19,19 +20,16 @@ class InventoriesController < ApplicationController
   def show
     @inventory = Inventory.find(params[:id])
     @movements = Movement.where(inventory_id: @inventory.id)
+    @movementsEntradas = @movements.where(tipo_movimiento: 0)
+    @movementsSalidas = @movements.where(tipo_movimiento: 1)
     @providers = Provider.joins(:movements).where(movements: { inventory_id: @inventory.id }).all.uniq
     @perishable = Product.find(@inventory.product_id)
 
+    nombreExcel='Listado de movimientos de '+ @perishable.nombre + " " + Date.today.strftime('%d-%m-%Y')+'.xlsx'
     respond_to do |format|
       format.html
       format.xlsx do
-        if @movements.present?
-          response.headers['Content-Disposition'] =
-            "attachment; filename=\"Listado de movimientos - #{@inventory.id}.xlsx\""
-        else
-          flash[:notice] = 'No hay movimientos para este producto.'
-          redirect_to inventory_path(id: @inventory.id)
-        end
+        render xlsx: 'show', filename: nombreExcel
       end
     end
   end
@@ -45,16 +43,17 @@ class InventoriesController < ApplicationController
   def create
     @inventory = Inventory.new(inventory_params)
 
-    @new_movement = Movement.new
-    @new_movement.tipo_movimiento = 'Entrada'
-    @new_movement.cantidad = @inventory.stock
-    @new_movement.descripcion = 'Inventario inicial'
-    @new_movement.inventory_id = @inventory.id
-    @new_movement.provider_id = params[:provider_id]
-    @new_movement.save
-
     respond_to do |format|
       if @inventory.save
+        # Movement.update_entrada(@inventory.stock, params[:inventory][:provider_id])
+        @new_movement = Movement.new
+        @new_movement.tipo_movimiento = 'Entrada'
+        @new_movement.cantidad = @inventory.stock
+        @new_movement.descripcion = 'Inventario inicial'
+        @new_movement.inventory_id = @inventory.id
+        @new_movement.provider_id = params[:inventory][:provider_id]
+        @new_movement.save
+
         format.html { redirect_to inventory_url(@inventory), notice: 'Producto agregado al inventario exitosamente.' }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -93,6 +92,13 @@ class InventoriesController < ApplicationController
     @movement.inventory_id = @inventory.id
 
     if @movement.save
+
+      if @movement.tipo_movimiento == 'Entrada'
+        @movement.update_entrada(@movement.cantidad, @movement.provider_id)
+      else
+        @movement.update_salida(@movement.cantidad, @movement.client_id)
+      end
+
       redirect_to inventory_path(id: @inventory.id), notice: 'Movimiento creado exitosamente.'
     else
       flash[:notice] = 'Ha ocurrido un error al crear el Movimiento.'

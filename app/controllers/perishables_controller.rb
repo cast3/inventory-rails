@@ -7,10 +7,11 @@ class PerishablesController < ApplicationController
     @totalProducts = @perishables
     @pagy, @perishables = pagy @perishables.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
+    nombreExcel= "Listado de productos " + Date.today.strftime('%d-%m-%Y')+'.xlsx'
     respond_to do |format|
       format.html
       format.xlsx do
-        render xlsx: 'index', filename: 'Listado de productos.xlsx'
+        render xlsx: 'index', filename: nombreExcel
       end
     end
   end
@@ -20,9 +21,11 @@ class PerishablesController < ApplicationController
   end
 
   def create
-    @perishable = Perishable.new(product_params)
+    @perishable = Perishable.create(product_params)
 
     set_product_image
+
+    puts @perishable.inspect
 
     respond_to do |format|
       if @perishable.save
@@ -81,7 +84,7 @@ class PerishablesController < ApplicationController
   end
 
   def sort_column
-    %w[nombre referencia precio fecha_caducidad tipo].include?(params[:sort]) ? params[:sort] : 'nombre'
+    %w[nombre referencia precio fecha_caducidad].include?(params[:sort]) ? params[:sort] : 'nombre'
   end
 
   def sort_direction

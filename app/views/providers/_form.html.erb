@@ -1,7 +1,7 @@
 <%= form_with(model: provider, class: "contents") do |form| %>
   <% if provider.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(provider.errors.count, "error") %> no permitieron que este proveedor fuera guardado:</h2>
+      <h2><%= pluralize(provider.errors.count, "errores") %> no permitieron que este proveedor fuera guardado:</h2>
       <ul>
         <% provider.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -15,9 +15,7 @@
   </div>
   <div class="my-5">
     <%= form.label "Teléfono" %>
-    <div class="flex flex-row gap-4">
-      <%= form.telephone_field :telefono, class: "shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "Telefono", maxlength:'10' %>
-    </div>
+    <%= form.telephone_field :telefono, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "Telefono", maxlength:'10' %>
   </div>
   <div class="my-5">
     <%= form.label 'Dirección' %>
@@ -28,7 +26,7 @@
     <%= form.text_field :email, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "ejemplo@email.com", maxlength:'60' %>
   </div>
   <div class="flex justify-center flex-row">
-    <%= form.submit "#{action_name == "new" ? "Añadir" : "Actualizar"} proveedor", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>
+    <%= form.submit "Guardar", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>
     <%= link_to "Volver a listado", providers_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
     <% if action_name == "edit" %>
       <%= link_to "Detalles", provider, class: "ml-2 rounded-lg py-3 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>

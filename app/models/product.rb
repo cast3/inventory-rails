@@ -18,6 +18,6 @@ class Product < ApplicationRecord
   end
 
   def capitalize
-    self.nombre = nombre.lowercase.capitalize
+    self.nombre = nombre.downcase.capitalize
   end
 end

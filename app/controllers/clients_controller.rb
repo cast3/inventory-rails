@@ -8,10 +8,11 @@ class ClientsController < ApplicationController
     @clients = @clients.search(params[:query]) if params[:query].present?
     @pagy, @clients = pagy @clients.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
+    nombreExcel = 'Listado de clientes ' + Time.now.strftime('%d-%m-%Y %H:%M:%S')
     respond_to do |format|
       format.html
       format.xlsx do
-        render xlsx: 'index', filename: 'Listado de clientes.xlsx'
+        render xlsx: 'index', filename: nombreExcel
       end
     end
   end
@@ -66,7 +67,7 @@ class ClientsController < ApplicationController
   end
 
   def sort_column
-    %w[nombre cedula referencia telefono puntaje].include?(params[:sort]) ? params[:sort] : 'nombre'
+    %w[nombre cedula telefono puntaje].include?(params[:sort]) ? params[:sort] : 'nombre'
   end
 
   def sort_direction

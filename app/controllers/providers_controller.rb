@@ -9,10 +9,11 @@ class ProvidersController < ApplicationController
     @perishables = @providers.search(params[:query]) if params[:query].present?
     @pagy, @providers = pagy @providers.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
+    nombreExcel = 'Listado de proveedores ' + Time.now.strftime('%d-%m-%Y %H:%M:%S').to_s + '.xlsx'
     respond_to do |format|
       format.html
       format.xlsx do
-        render xlsx: 'index', filename: 'Listado de proveedores.xlsx'
+        render xlsx: 'index', filename: nombreExcel
       end
     end
   end

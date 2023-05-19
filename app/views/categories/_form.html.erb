@@ -1,7 +1,7 @@
 <%= form_with(model: category, class: "contents") do |form| %>
 	<% if category.errors.any? %>
 		<div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      	<h2><%= pluralize(category.errors.count, "error") %> no permitieron que esta categoría fuera guardada:</h2>
+      	<h2><%= pluralize(category.errors.count, "errores") %> no permitieron que esta categoría fuera guardada:</h2>
 			<ul>
 				<% category.errors.each do |error| %>
 					<li><%= error.full_message %></li>
@@ -15,7 +15,7 @@
 			<%= form.text_field :nombre, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder: "Nombre de la categoría" %>
 		</div>
 		<div class="flex justify-center flex-row gap-x-3">
-			<%= form.submit "#{action_name == "new" ? "Crear" : "Actualizar"} categoría", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>
+			<%= form.submit "Guardar", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>
 			<%= link_to "Volver al listado", categories_path, class: "ml-2 rounded-lg py-2 px-5 bg-gray-300 hover:text-white hover:bg-gray-400 inline-block font-medium" %>
 		</div>
 	</div>

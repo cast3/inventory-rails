@@ -1,0 +1,20 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  # Define estilo para el encabezado de la tabla
+  table_header = s.add_style(bg_color: "4f46e5", fg_color: "FFFFFF", b: true)
+
+  wb.add_worksheet(name: "Listado de movimientos#{Date.today.day}") do |sheet|
+    # Define encabezados de la tabla
+    sheet.add_row ["ID", "Tipo", "Cantidad", "Descripción", "Cliente", "Fecha creación"], style: table_header
+     @movementsSalidas.each do |movement|
+      sheet.add_row [movement.id, movement.tipo_movimiento, movement.cantidad, movement.descripcion, Client.find(movement.client_id).nombre, movement.created_at]
+    end
+
+    sheet.add_row ["", "", "", "", "", ""]
+
+    sheet.add_row ["ID", "Tipo", "Cantidad", "Descripción", "Proveedor", "Fecha creación"], style: table_header
+      @movementsEntradas.each do |movement|
+      sheet.add_row [movement.id, movement.tipo_movimiento, movement.cantidad, movement.descripcion, Provider.find(movement.provider_id).nombre, movement.created_at]
+    end
+  end
+end

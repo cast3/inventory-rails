@@ -1,6 +1,6 @@
 class Perishable < Product
   # Validaciones
-  validates :fecha_caducidad, :presence => true, :if => :perishable?
+  validates :fecha_caducidad, :presence => true
 
   # Métodos
   def tipo

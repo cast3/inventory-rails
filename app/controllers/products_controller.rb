@@ -9,10 +9,11 @@ class ProductsController < ApplicationController
     @products = Product.search_by_name(params[:query]) if params[:query].present?
     @pagy, @products = pagy @products.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
+    nombreExcel = 'Listado de productos ' +  Date.today.strftime('%d-%m-%Y')+'.xlsx'
     respond_to do |format|
       format.html
       format.xlsx do
-        render xlsx: 'index', filename: 'Listado de productos.xlsx'
+        render xlsx: 'index', filename: nombreExcel
       end
     end
   end
@@ -96,6 +97,6 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:nombre, :image, :category_id, :precio, :referencia,
-                                    :tipo, :fecha_caducidad)
+                                     :fecha_caducidad)
   end
 end

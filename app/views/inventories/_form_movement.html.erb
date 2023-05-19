@@ -1,7 +1,7 @@
 <%= form_with model: @movement, class: "contents", url: create_movement_inventory_path(@inventory), local: true do |f| %>
   <% if @movement.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(@movement.errors.count, "error") %> no permitieron que este acción fuera guardada:</h2>
+      <h2><%= pluralize(@movement.errors.count, "errores") %> no permitieron que este acción fuera guardada:</h2>
       <ul>
         <% @movement.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -16,7 +16,7 @@
     </div>
     <div class="col-span-1" id="proveedor-wrapper2">
       <%= f.label :cantidad %>
-      <%= f.number_field :cantidad, step: 1, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 0, placeholder: 'Cantidad' %>
+      <%= f.number_field :cantidad, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: "0", placeholder: 'Cantidad' %>
     </div>
     <div class="col-span-1" id="cliente-wrapper2">
       <%= f.label :cantidad %>

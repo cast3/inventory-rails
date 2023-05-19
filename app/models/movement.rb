@@ -5,11 +5,10 @@ class Movement < ApplicationRecord
 
   MOVEMENT_TYPES = { add: 0, remove: 1 }.freeze
 
-  validates :cantidad, numericality: { greater_than: 0 }
+  validates :cantidad, presence: true
   validates :descripcion, presence: true, length: { maximum: 50 }
   validates :tipo_movimiento, presence: true, inclusion: { in: MOVEMENT_TYPES.values }
   validate :provider_id_or_client_id_present
-  after_save :update_inventory
 
   def self.get_tipo_movimiento
     {
@@ -23,22 +22,23 @@ class Movement < ApplicationRecord
     return 'Salida' if tipo_movimiento == MOVEMENT_TYPES[:remove]
   end
 
-  def update_inventory
+  def update_entrada(cantidad, provider_id)
     inventory = Inventory.find(inventory_id)
-    if tipo_movimiento == 0
-      inventory.update(stock: inventory.stock + cantidad)
-    elsif tipo_movimiento == 1
-      inventory.update(stock: inventory.stock - cantidad)
-      client = Client.find(client_id)
+    inventory.update(stock: inventory.stock + cantidad)
+  end
 
-      if cantidad >= 50
-        client.update(puntaje: client.puntaje + 3)
-      elsif cantidad >= 20
-        client.update(puntaje: client.puntaje + 2)
-      elsif cantidad >= 10
-        client.update(puntaje: client.puntaje + 1)
-      end
+  def update_salida(cantidad, client_id)
+    inventory = Inventory.find(inventory_id)
+    inventory.update(stock: inventory.stock - cantidad)
 
+    client = Client.find(client_id)
+    if cantidad >= 50
+      puntos = (cantidad / 50) * 10
+      client.update(puntaje: client.puntaje + puntos)
+    else
+      puntos = (cantidad / 10) * 10
+      puntos = 10 if puntos.zero?
+      client.update(puntaje: client.puntaje + puntos)
     end
   end
 
