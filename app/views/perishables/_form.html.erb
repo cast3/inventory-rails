@@ -26,7 +26,7 @@
     </div>
     <div class="col-span-1">
       <%= form.label :precio, "Precio", class: "block mt-1 mb-1" %>
-      <%= form.number_field :precio, precision: 8, scale: 2 , class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 1, placeholder: 'Precio del producto' %>
+      <%= form.number_field :precio, precision: 4, scale: 2, step: 'any', class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: 1, placeholder: 'Precio del producto' %>
     </div>
   </div>
   <div class="grid grid-flow-row grid-cols-2 items-center gap-x-2">

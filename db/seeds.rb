@@ -16,14 +16,14 @@ end
   proveedores.save
 end
 
-# 50.times do |_n|
-#   clientes = Client.new
-#   clientes.cedula = Faker::Number.number(digits: 10)
-#   clientes.nombre = Faker::Name.name
-#   clientes.telefono = Faker::Number.number(digits: 10)
-#   clientes.puntaje = 0
-#   clientes.save
-# end
+50.times do |_n|
+  clientes = Client.new
+  clientes.cedula = Faker::Number.number(digits: 10)
+  clientes.nombre = Faker::Name.name
+  clientes.telefono = Faker::Number.number(digits: 10)
+  clientes.puntaje = 0
+  clientes.save
+end
 
 # default_image_path = Rails.root.join('app', 'assets', 'images', 'default.png')
 # default_image = File.open(default_image_path, 'rb').read

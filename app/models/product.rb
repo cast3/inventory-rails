@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  before_save :upcase_referencia, :capitalize
+  before_save :upcase_referencia, :capitalize, :tipo
   has_one :inventory, dependent: :destroy
   belongs_to :category
 
@@ -8,7 +8,7 @@ class Product < ApplicationRecord
   validates :precio, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def tipo
-    'Producto'
+    self.tipo='Producto'
   end
 
   private

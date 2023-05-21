@@ -4,6 +4,6 @@ class Perishable < Product
 
   # Métodos
   def tipo
-    super + ' Perecedero'
+    self.tipo='Producto Perecedero'
   end
 end

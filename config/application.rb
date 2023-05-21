@@ -26,16 +26,16 @@ module ABCLTDA
 
     # customize generators
     config.generators do |g|
-      g.test_framework :rspec, fixture: false
-      g.fixture_replacement :factory_bot, dir: 'spec/factories'
-      g.view_specs = false
-      g.helper_specs = false
-      g.routing_specs = false
-      g.request_specs = false
-      g.controller_specs = false
-      g.javascripts = false
-      g.assets = true # stylesheets
-      g.helper = true
+      # g.test_framework :rspec, fixture: false
+      # g.fixture_replacement :factory_bot, dir: 'spec/factories'
+      # g.view_specs = false
+      # g.helper_specs = false
+      # g.routing_specs = false
+      # g.request_specs = false
+      # g.controller_specs = false
+      # g.javascripts = false
+      # g.assets = true # stylesheets
+      # g.helper = true
     end
     config.generators.system_tests = nil
 

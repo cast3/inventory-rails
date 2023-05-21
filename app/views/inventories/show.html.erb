@@ -35,12 +35,14 @@
         </tr>
         <tr>
           <td class="px-4 py-[5px] font-semibold">Stock:</td>
-          <% if @inventory.stock > @inventory.cantidad_minima %>
-            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-green-900') %></td>
-          <% elsif @inventory.stock < @inventory.cantidad_minima %>
-            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-red-900') %></td>
+          <% if @inventory.stock == 0 %>
+            <td class="px-4 py-[5px]"><%= tag.span('Sin productos', class: 'text-red-900') %></td>
+          <% elsif @inventory.stock > @inventory.cantidad_minima %>
+            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-green-600 font-bold') %></td>
+          <% elsif @inventory.stock <= @inventory.cantidad_minima %>
+            <td class="px-4 py-[5px] text-red-600 font-bold"><%= tag.span(@inventory.stock) %> Ordenar </td>
           <% else %>
-            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-yellow-900') %></td>
+            <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-yellow-600 font-bold') %></td>
           <% end %>
         </tr>
         <tr>
