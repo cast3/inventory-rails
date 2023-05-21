@@ -2,7 +2,6 @@
 <div class="max-w-3xl mx-auto px-4">
   <div class="mb-4">
     <h3 class="font-semibold">Registros</h3>
-    <%= line_chart User.where(created_at: 3.months.ago..Time.now).group_by_week(:created_at).count %>
   </div>
   <div class="overflow-x-auto">
     <div class="py-2 align-middle inline-block sm:px-6 lg:px-8">

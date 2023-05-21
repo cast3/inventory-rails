@@ -40,7 +40,7 @@
           <% elsif @inventory.stock > @inventory.cantidad_minima %>
             <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-green-600 font-bold') %></td>
           <% elsif @inventory.stock <= @inventory.cantidad_minima %>
-            <td class="px-4 py-[5px] text-red-600 font-bold"><%= tag.span(@inventory.stock) %> Ordenar </td>
+            <td class="px-4 py-[5px] text-red-600 font-bold"><%= tag.span(@inventory.stock) %> </td>
           <% else %>
             <td class="px-4 py-[5px]"><%= tag.span(@inventory.stock, class: 'text-yellow-600 font-bold') %></td>
           <% end %>

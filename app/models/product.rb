@@ -8,7 +8,7 @@ class Product < ApplicationRecord
   validates :precio, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def tipo
-    self.tipo='Producto'
+    self.tipo = 'Producto'
   end
 
   private
