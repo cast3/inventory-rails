@@ -22,7 +22,7 @@ class Movement < ApplicationRecord
     return 'Salida' if tipo_movimiento == MOVEMENT_TYPES[:remove]
   end
 
-  def update_entrada(cantidad, provider_id)
+  def update_entrada(cantidad)
     inventory = Inventory.find(inventory_id)
     inventory.update(stock: inventory.stock + cantidad)
   end
@@ -32,14 +32,14 @@ class Movement < ApplicationRecord
     inventory.update(stock: inventory.stock - cantidad)
 
     client = Client.find(client_id)
+    puntos = 0
     if cantidad >= 50
       puntos = (cantidad / 50) * 10
-      client.update(puntaje: client.puntaje + puntos)
     else
       puntos = (cantidad / 10) * 10
-      puntos = 10 if puntos.zero?
-      client.update(puntaje: client.puntaje + puntos)
+      puntos = 5 if puntos.zero?
     end
+    client.update(puntaje: client.puntaje + puntos)
   end
 
   private
