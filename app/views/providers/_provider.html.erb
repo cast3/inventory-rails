@@ -32,7 +32,14 @@
   <% if action_name != "show" %>
     <td class="px-4 py-3 whitespace-nowrap">
       <div class="flex flex-row flex-nowrap justify-center">
-        <%= render partial: 'shared/menu_dropdown', locals: {  ver_method: provider, edit_method: edit_provider_path(provider) } %>
+      <%= link_to edit_provider_path(provider), class: "flex justify-center items-center gap-x-2 px-4 py-2 hover:ring-primary hover:ring-1 rounded-lg " do %>
+        <%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
+        Editar
+      <% end %>
+      <%= link_to provider, class: "flex justify-center items-center gap-x-2 px-4 py-2 hover:ring-primary hover:ring-1 rounded-lg " do %>
+        <%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
+        Ver
+      <% end %>
       </div>
     </td>
   <% end %>

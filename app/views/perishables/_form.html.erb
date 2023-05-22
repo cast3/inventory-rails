@@ -36,7 +36,7 @@
     </div>
     <div class="col-span-1">
       <%= form.label "Foto del Producto", class: "block mt-3" %>
-      <%= form.file_field :image, class:'py-2' %>
+      <%= form.file_field :image, class:'py-2', accept: 'image/png, image/jpeg, image/jpg' %>
     </div>
     <div class="col-span-2 text-right">
       <span class="text-xs">Opcional</span>

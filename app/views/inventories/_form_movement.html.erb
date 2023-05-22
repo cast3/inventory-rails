@@ -14,13 +14,13 @@
       <%= f.label :tipo_movimiento %>
       <%= f.select :tipo_movimiento, options_for_select(Movement.get_tipo_movimiento, @movement.tipo_movimiento), { prompt: 'Seleccione un tipo de movimiento' }, {class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full', id: 'tipo_movimiento', data: { controller: 'tipo-movimiento', action: 'tipo-movimiento#click' } } %>
     </div>
-    <div class="col-span-1" id="proveedor-wrapper2">
-      <%= f.label :cantidad %>
-      <%= f.number_field :cantidad, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: "0", placeholder: 'Cantidad' %>
-    </div>
     <div class="col-span-1" id="cliente-wrapper2">
       <%= f.label :cantidad %>
-      <%= f.select :cantidad, (1..inventory.stock).to_a, {}, class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full' %>
+      <%= f.select :cantidadSalida, (1..inventory.stock).to_a, {}, class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full' %>
+    </div>
+    <div class="col-span-1" id="proveedor-wrapper2">
+      <%= f.label :cantidad %>
+      <%= f.number_field :cantidad, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 w-full", min: "1", placeholder: 'Cantidad' %>
     </div>
   </div>
   <div class="my-5">

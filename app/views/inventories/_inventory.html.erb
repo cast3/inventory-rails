@@ -41,11 +41,14 @@
   </td>
   <td class="px-4 py-3 whitespace-nowrap">
     <div class="flex flex-row flex-nowrap justify-center gap-x-2">
-      <%= render partial: "shared/menu_dropdown",
-      locals: {
-        ver_method: inventory,
-        edit_method: edit_inventory_path(inventory)
-      } %>
+      <%= link_to edit_inventory_path(inventory), class: "flex justify-center items-center gap-x-2 px-4 py-2 hover:ring-primary hover:ring-1 rounded-lg " do %>
+        <%= image_tag("svgs/IconEdit.svg", alt: "IconEdit", width: "22", height: "22") %>
+        Editar
+      <% end %>
+      <%= link_to inventory, class: "flex justify-center items-center gap-x-2 px-4 py-2 hover:ring-primary hover:ring-1 rounded-lg " do %>
+        <%= image_tag("svgs/IconVer.svg", alt: "IconVer", width: "22", height: "22") %>
+        Ver
+      <% end %>
     </div>
   </td>
 </tr>

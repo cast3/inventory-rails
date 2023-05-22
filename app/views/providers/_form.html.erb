@@ -23,7 +23,7 @@
   </div>
   <div class="my-5">
     <%= form.label 'Email' %>
-    <%= form.text_field :email, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "ejemplo@email.com", maxlength:'60' %>
+    <%= form.text_field :email, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", placeholder: "ejemplo@email.com", maxlength:'60', type:"email" %>
   </div>
   <div class="flex justify-center flex-row">
     <%= form.submit "Guardar", class: "bg-primary hover:bg-primary-hover-500 rounded-lg py-2 px-5 text-white font-medium cursor-pointer" %>

@@ -91,17 +91,17 @@ class InventoriesController < ApplicationController
     @movement = Movement.new(movement_params)
     @movement.inventory_id = @inventory.id
 
+    if @movement.tipo_movimiento == 0
+      @movement.update_entrada(@movement.cantidad)
+    else
+      @movement.cantidad = params[:movement][:cantidadSalida]
+      @movement.update_salida(@movement.cantidad, @movement.client_id)
+    end
+
     if @movement.save
-
-      if @movement.tipo_movimiento == 'Entrada'
-        @movement.update_entrada(@movement.cantidad, @movement.provider_id)
-      else
-        @movement.update_salida(@movement.cantidad, @movement.client_id)
-      end
-
       redirect_to inventory_path(id: @inventory.id), notice: 'Movimiento creado exitosamente.'
     else
-      flash[:notice] = 'Ha ocurrido un error al crear el Movimiento.'
+      flash[:alert] = 'Ha ocurrido un error al crear el Movimiento.'
       render :new_movement, status: :unprocessable_entity
     end
   end
@@ -116,7 +116,7 @@ class InventoriesController < ApplicationController
     return unless @movement.tipo_movimiento == 'Salida'
     return unless @movement.cantidad > @inventory.stock
 
-    flash[:notice] = 'No hay suficientes productos en el inventario.'
+    flash[:alert] = 'No hay suficientes productos en el inventario.'
     render :new_movement, status: :unprocessable_entity
   end
 

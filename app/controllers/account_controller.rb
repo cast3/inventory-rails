@@ -6,6 +6,10 @@ class AccountController < ApplicationController
   def update
     current_user.update(account_update_params)
     sign_in(current_user, bypass: true) # prevents user from needing to log back in
+    if current_user.errors.any?
+      
+      return redirect_to account_index_path
+    end
     redirect_to account_index_path, notice: 'Perfil actualizado exitosamente.'
   end
 

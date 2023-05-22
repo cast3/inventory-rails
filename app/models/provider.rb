@@ -5,5 +5,6 @@ class Provider < ApplicationRecord
   validates :nombre, presence: true
   validates :direccion, presence: true, length: { maximum: 60 }
   validates :telefono, presence: true, length: { maximum: 10 }
-  validates :email, presence: true, length: { maximum: 60 }
+  validates :email, presence: true, length: { maximum: 60 },
+                    format: { with: URI::MailTo::EMAIL_REGEXP, message: 'no es un correo electrónico válido' }
 end

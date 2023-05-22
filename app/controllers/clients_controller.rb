@@ -5,7 +5,6 @@ class ClientsController < ApplicationController
 
   def index
     @clients = Client.all.order('created_at DESC')
-    @clients = @clients.search(params[:query]) if params[:query].present?
     @pagy, @clients = pagy @clients.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
     nombreExcel = 'Listado de clientes ' + Time.now.strftime('%d-%m-%Y %H:%M:%S')
@@ -60,6 +59,9 @@ class ClientsController < ApplicationController
 
   def set_client
     @client = Client.find(params[:id])
+    puts '--------------cliente ------------'
+    puts @client.inspect
+    puts '--------------cliente ------------'
   end
 
   def client_params
