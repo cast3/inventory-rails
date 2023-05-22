@@ -27,9 +27,11 @@
           <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Dashboard </span>
         <% end %>
       <% end %>
-      <%= link_to perishables_path, class: "#{nav_link_classes} #{params[:controller] == 'perishables' ? active_link_classes : ''}" do %>
-        <%= image_tag "svgs/IconCaja.svg", class: "h-6 mr-3" %>
-        <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Productos </span>
+      <% if current_user.role == 'admin' %>
+        <%= link_to perishables_path, class: "#{nav_link_classes} #{params[:controller] == 'perishables' ? active_link_classes : ''}" do %>
+          <%= image_tag "svgs/IconCaja.svg", class: "h-6 mr-3" %>
+          <span class="hover:opacity-1 inline-block w-full pb-1 text-sm md:pb-0"> Productos </span>
+        <% end %>
       <% end %>
       <%= link_to inventories_path, class: "#{nav_link_classes} #{params[:controller] == 'inventories' ? active_link_classes : ''}" do %>
         <%= image_tag "svgs/IconInventory.svg", class: "h-6 mr-3" %>
